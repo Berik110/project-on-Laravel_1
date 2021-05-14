@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AddItemRequest;
+use App\Http\Requests\ValidateImgStore;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Item;
 use App\Models\ItemImage;
+use App\Models\Region;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -39,19 +41,28 @@ class HomeController extends Controller
         $user = Auth::user();
         $categories = Category::all();
         $brands = Brand::all();
-        return view('addadvert', compact('categories', 'brands', 'user'));
+        $regions = Region::all();
+        return view('addadvert', compact('categories', 'brands', 'user', 'regions'));
     }
 
-    public function storeAdd(AddItemRequest $request)
+    public function storeAdd(AddItemRequest $req, ValidateImgStore $request)
     {
-        $item = Item::create($request->all());
-        $file = $request->file('advImage');
-        $path = '/images/'.$file->getClientOriginalName();
-        $file->move('images/', $file->getClientOriginalName());
+        $item = Item::create($req->all());
 
-        ItemImage::create(['url'=>$path, 'item_id'=>$item->id]);
+        if ($request->file('url')){
+            $file = $request->file('url');
+            $path = '/images/'.$file->getClientOriginalName();
+            $file->move('images/', $file->getClientOriginalName());
+
+            ItemImage::create(['url'=>$path, 'item_id'=>$item->id]);
+        }
+        /* было так */
+//        $file = $request->file('advImage');
+//        $path = '/images/'.$file->getClientOriginalName();
+//        $file->move('images/', $file->getClientOriginalName());
+//
+//        ItemImage::create(['url'=>$path, 'item_id'=>$item->id]);
         return redirect('/advertpage?succes=1');
-
 
 //        мульти загрузка - работает
 //        $item = Item::create($request->all());

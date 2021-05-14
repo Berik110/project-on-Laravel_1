@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Requests\AddItemRequest;
 use App\Models\Brand;
 use App\Models\Category;
+use App\Models\City;
 use App\Models\Item;
 use App\Models\ItemImage;
+use App\Models\Region;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -27,7 +29,9 @@ class ItemController extends Controller
         $items = Item::all();
         $brands = Brand::all();
         $categories = Category::all();
-        return view(self::PATH .'index', compact('items', 'brands', 'categories', 'user'));
+        $regions = Region::all();
+        $cities = City::all();
+        return view(self::PATH .'index', compact('items', 'brands', 'categories', 'user', 'regions', 'cities'));
     }
 
     /**
@@ -124,14 +128,16 @@ class ItemController extends Controller
 
     public function itemsByCategory(Request $request)
     {
-        $items = Item::where('category_id', $request->get('category_id'))->paginate(6);
+//        $items = Item::where('category_id', $request->get('category_id'))->paginate(6); // используем этот вариант
 //        $items = Item::where('category_id', $request->get('category_id'))->simplePaginate(6);
-//        $items = Item::where('category_id', $request->get('category_id'))->get();
+        $items = Item::where('category_id', $request->get('category_id'))->get();
         $categories = Category::all();
         $brands = Brand::all();
         $user = Auth::user();
+        $regions = Region::all();
+        $cities = City::all();
 
-        return view('items.by_category', compact('items', 'categories', 'brands', 'user'));
+        return view('items.by_category', compact('items', 'categories', 'brands', 'user', 'regions', 'cities'));
     }
 
 
@@ -144,19 +150,23 @@ class ItemController extends Controller
     public function option1(){
         $categories = Category::all();
         $brands = Brand::all();
-//        $items = Item::where('option', 1)->get();
-        $items = Item::where('option', 1)->paginate(6);
+        $items = Item::where('option', 1)->get();
+        $regions = Region::all();
+        $cities = City::all();
+//        $items = Item::where('option', 1)->paginate(6);
 
-        return view('items.by_options1', compact('items', 'categories', 'brands'));
+        return view('items.by_options1', compact('items', 'categories', 'brands', 'regions', 'cities'));
     }
 
     public function option2(){
         $categories = Category::all();
         $brands = Brand::all();
-//        $items = Item::where('option', 2)->get();
-        $items = Item::where('option', 2)->paginate(6);
+        $items = Item::where('option', 2)->get();
+        $regions = Region::all();
+        $cities = City::all();
+//        $items = Item::where('option', 2)->paginate(6);
 
-        return view('items.by_options2', compact('items', 'categories', 'brands'));
+        return view('items.by_options2', compact('items', 'categories', 'brands', 'regions', 'cities'));
     }
 
     public function forParts(){
@@ -174,19 +184,21 @@ class ItemController extends Controller
         $option = $request->get('option');
         $price_from = $request->get('priceFrom');
         $price_till = $request->get('priceTill');
+        $city = $request->get('city_id');
+        $region = $request->get('region_id');
 
        $items = Item::all();
 
         if ($category){
             $items =  $items->filter(function ($item) use ($category){
                 return $item->category_id==$category;
-            })->paginate(6);
+            });
         }
 
         if ($brand){
             $items =  $items->filter(function ($item) use ($brand){
                 return $item->brand_id==$brand;
-            })->paginate(6);
+            });
         }
 //        if ($name){
 //            $items =  $items->filter(function ($item) use ($name){
@@ -196,24 +208,36 @@ class ItemController extends Controller
         if ($option){
             $items =  $items->filter(function ($item) use ($option){
                 return $item->option==$option;
-            })->paginate(6);
+            });
         }
         if ($price_from){
             $items =  $items->filter(function ($item) use ($price_from){
                 return $item->price>=$price_from;
-            })->paginate(6);
+            });
         }
         if ($price_till){
             $items =  $items->filter(function ($item) use ($price_till){
                 return $item->price<=$price_till;
-            })->paginate(6);
+            });
+        }
+        if ($region){
+            $items =  $items->filter(function ($item) use ($region){
+                return $item->city->region_id==$region;
+            });
+        }
+        if ($city){
+            $items =  $items->filter(function ($item) use ($city){
+                return $item->city_id==$city;
+            });
         }
 
         $brands = Brand::all();
         $categories = Category::all();
+        $regions = Region::all();
+        $cities = City::all();
         $user = Auth::user();
 
-        return view('items.by_category', compact('categories', 'brands', 'items', 'user'));
+        return view('items.by_category', compact('categories', 'brands', 'items', 'user', 'cities', 'regions'));
     }
 
 
@@ -231,8 +255,11 @@ class ItemController extends Controller
         $categories = Category::all();
         $brands = Brand::all();
         $item = Item::find($request->get('id'));
-
-        return view('items.change_item', compact('categories', 'brands', 'item'));
+        $regions = Region::all();
+        $cities = City::all();
+        $user = Auth::user();
+        $city = City::find($request->get('city_id'));
+        return view('items.change_item', compact('categories', 'brands', 'item', 'regions', 'cities', 'user', 'city'));
     }
 
     public function deleteItem(Request $request){
@@ -243,7 +270,7 @@ class ItemController extends Controller
     public function updateItem(AddItemRequest $request)
     {
         /*Новая версия для сохранения если много полей*/
-        Item::where('id', $request->id)->update($request->except('id', '_method', '_token'));
+        Item::where('id', $request->id)->update($request->except('id', '_method', '_token', 'region_id'));
         $id = $request->id;
         /* Сохраняем по старому */
 //        $item = Item::find($request->get('id'));

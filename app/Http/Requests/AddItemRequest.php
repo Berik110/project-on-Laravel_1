@@ -24,14 +24,14 @@ class AddItemRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'=>'required',
-            'description'=>'required',
-            'price'=>'required',
-            'quantity'=>'required',
+            'name'=>'string|required',
+            'description'=>'string|required',
+            'price'=>'required|numeric',
+            'quantity'=>'required|numeric',
             'option'=>'required',
             'category_id'=>'required',
             'brand_id'=>'required',
-
+            'city_id'=>'required',
         ];
     }
 }
