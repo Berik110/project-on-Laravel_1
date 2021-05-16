@@ -1,3 +1,4 @@
+
 <!-- Modal -->
 <div class="modal fade" id="addItem" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -12,6 +13,25 @@
                     </button>
                 </div>
                 <div class="modal-body">
+                    <div class="form-group">
+                        <select class="form-control" name="category_id" id="region">
+                            <option value="0">Выбрать Область</option>
+                            @foreach($regions as $region)
+                                <option value="{{$region->id}}">{{$region->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <select class="form-control" name="city_id" id="city">
+                            <option value="0">Выбрать город</option>
+                            @foreach($cities as $city)
+                                <option value="{{$city->id}}">{{$city->name}}</option>
+                            @endforeach
+                        </select>
+                        @error('city_id')
+                        <span class="text-danger">Обязательное поле для заполнения</span>
+                        @enderror
+                    </div>
                     <div class="form-group">
                         <select class="form-control" name="category_id">
                             <option value="0">Выбрать Категорию</option>
@@ -82,4 +102,5 @@
         </div>
     </div>
 </div>
+
 

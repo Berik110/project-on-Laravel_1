@@ -12,7 +12,7 @@ class Item extends Model
     use SoftDeletes;
 
     protected $fillable=[
-        'name', 'description', 'price', 'quantity', 'option', 'brand_id', 'category_id', 'user_id'
+        'name', 'year', 'description', 'price', 'quantity', 'option', 'brand_id', 'category_id', 'city_id', 'user_id'
     ];
 
     public function brand(){
@@ -34,4 +34,9 @@ class Item extends Model
     public function images(){
         return $this->hasMany(ItemImage::class, 'item_id');
     }
+
+    public function city(){
+        return $this->belongsTo(City::class, 'city_id'); // Many to One
+    }
+
 }

@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light" style="background-color: white; font-family: Arial;">
     <a href="{{'/'}}" class="navbar-brand">
-                    <img src="{{asset('logo2.png')}}" width="100px">
+                    <img src="{{asset('by_logaster.png')}}" width="150px">
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -26,7 +26,8 @@
                 </li>
             @else
                 <li class="nav-item">
-                    <a href="#" class="nav-link" data-toggle="modal" data-target="#loginModal">Разместить объявление</a>
+                    {{--<a href="#" class="nav-link" data-toggle="modal" data-target="#loginModal">Разместить объявление</a>--}}
+                    <a class="nav-link" href="{{route('login')}}">Разместить объявление</a>
                 </li>
             @endauth
         </ul>
@@ -34,14 +35,20 @@
             <!-- Authentication Links -->
             @guest
                 @if (Route::has('login'))
+{{--                    <li class="nav-item">--}}
+{{--                        <a href="#" class="nav-link" data-toggle="modal" data-target="#loginModal">{{ __('Login') }}</a>--}}
+{{--                    </li>--}}
                     <li class="nav-item">
-                        <a href="#" class="nav-link" data-toggle="modal" data-target="#loginModal">{{ __('Login') }}</a>
+                        <a class="nav-link" href="{{route('login')}}">{{ __('Войти') }}</a>
                     </li>
                 @endif
 
                 @if (Route::has('register'))
+{{--                    <li class="nav-item">--}}
+{{--                        <a href="#" class="nav-link" data-toggle="modal" data-target="#registerModal">{{ __('Register') }}</a>--}}
+{{--                    </li>--}}
                     <li class="nav-item">
-                        <a href="#" class="nav-link" data-toggle="modal" data-target="#registerModal">{{ __('Register') }}</a>
+                        <a class="nav-link" href="{{route('register')}}">{{ __('Регистрация') }}</a>
                     </li>
                 @endif
             @else
@@ -54,12 +61,12 @@
                         @if(\Illuminate\Support\Facades\Auth::user()->name=='admin')
                             <a class="dropdown-item" href="{{ route('admin.index') }}">Admin page</a>
                         @else
-                            <a class="dropdown-item" href="{{ route('profile') }}">Profile</a>
+                            <a class="dropdown-item" href="{{ route('profile') }}">Профайл</a>
                         @endif
                         <a class="dropdown-item" href="{{ route('logout') }}"
                            onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                            {{ __('Logout') }}
+                            {{ __('Выйти') }}
                         </a>
 
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">

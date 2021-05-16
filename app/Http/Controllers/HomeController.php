@@ -48,20 +48,20 @@ class HomeController extends Controller
     public function storeAdd(AddItemRequest $req, ValidateImgStore $request)
     {
         $item = Item::create($req->all());
-
-        if ($request->file('url')){
-            $file = $request->file('url');
-            $path = '/images/'.$file->getClientOriginalName();
-            $file->move('images/', $file->getClientOriginalName());
-
-            ItemImage::create(['url'=>$path, 'item_id'=>$item->id]);
-        }
-        /* было так */
-//        $file = $request->file('advImage');
+        /* 1 вариант  - было так согласно курсу */
+//        $file = $request->file('url');
 //        $path = '/images/'.$file->getClientOriginalName();
 //        $file->move('images/', $file->getClientOriginalName());
 //
 //        ItemImage::create(['url'=>$path, 'item_id'=>$item->id]);
+
+        /* 2 вариант */
+        if ($request->hasFile('url')){
+            $folder = date('Y-m-d');
+            $path = $request->file('url')->store("images/{$folder}", "public");
+        }
+        ItemImage::create(['url'=>$path ?? null, 'item_id'=>$item->id]); // $path ? $path : null
+
         return redirect('/advertpage?succes=1');
 
 //        мульти загрузка - работает

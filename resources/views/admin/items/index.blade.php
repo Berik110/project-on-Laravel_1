@@ -81,4 +81,44 @@
         </div>
     </div>
 @endsection
+@section('custom.js')
+    <script type="text/javascript">
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $(document).ready(function () {
+            $('#region').change(function () {
+                var id = $(this).val();
+
+                $('#city').find('option').not(':first').remove();
+
+                $.ajax({
+                    url:'regions/'+id,
+                    type:'get',
+                    dataType:'json',
+                    success:function (response) {
+                        var len = 0;
+                        if (response.data != null) {
+                            len = response.data.length;
+                        }
+
+                        if (len>0) {
+                            for (var i = 0; i<len; i++) {
+                                var id = response.data[i].id;
+                                var name = response.data[i].name;
+
+                                var option = "<option value='"+id+"'>"+name+"</option>";
+
+                                $("#city").append(option);
+                            }
+                        }
+                    }
+                })
+            });
+        });
+    </script>
+@endsection
 

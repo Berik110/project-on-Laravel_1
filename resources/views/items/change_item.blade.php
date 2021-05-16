@@ -7,7 +7,7 @@
                 <nav aria-label="breadcrumb" >
                     <ol class="breadcrumb" style="background-color: white">
                         <li class="breadcrumb-item"><a href="{{'/'}}">Главная страница</a></li>
-                        <li class="breadcrumb-item"><a href="{{route('categories', ['category_id'=>$item->category_id])}}">Техника-оборудования</a></li>
+                        <li class="breadcrumb-item active"><a href="{{route('categories', ['category_id'=>$item->category_id])}}">{{$item->category->name}}</a></li>
                         <li class="breadcrumb-item"><a href="{{route('details', ['item_id'=>$item->id])}}">
                                 Детали - {{$item->brand->name}} {{$item->name}}
                             </a>
@@ -23,17 +23,26 @@
             <div class="col-md-6 mx-auto">
 
                 <div class="card form-group">
-                    <img src="{{$item->images->first()['url']}}" class="card-img-top" alt="...">
+                {{--<img src="{{$item->images->first()['url']}}" class="card-img-top" alt="...">--}}
+                    @if($item->images->first()['url']!=null)
+                        <img src="{{asset('storage/'.$item->images->first()['url'])}}" class="card-img-top">
+                    @else
+                        <img src="{{asset('/images/noImg.png')}}" class="card-img-top">
+                    @endif
                     <div class="card-body">
                         <form action="{{url('/details/change/img')}}" method="post" enctype="multipart/form-data">
                             @csrf
                             {{method_field('put')}}
                             <input type="hidden" name="id" value="{{$item->id}}">
                             <div class="custom-file">
-                                <input name="image" type="file" class="custom-file-input" id="customFile">
+                                <input name="url" type="file" class="custom-file-input" id="customFile">
                                 <label class="custom-file-label" for="customFile">Выбрать файл</label>
+
                             </div>
                             <button class="btn btn-primary mt-3">Загрузить</button>
+                            @error('url')
+                                <span class="text-danger">Файл должен быть изображением</span>
+                            @enderror
                         </form>
                     </div>
                 </div>
@@ -45,18 +54,21 @@
 {{--                    <input type="hidden" name="user_id" value="{{$user->id}}">--}}
 
                     <div class="form-group">
-                        <select class="form-control" name="region_id" id="region">
+                        <select class="form-control" name="region_id" id="region" required>
                             <option value="0">Выбрать Область</option>
                             @foreach($regions as $region)
-                                <option value="{{$region->id}}">
+                                <option value="{{$region->id}}" {{($region->id==$item->city->region->id)?"selected='selected'":""}}>
                                     {{$region->name}}
                                 </option>
                             @endforeach
                         </select>
+                        @error('region_id')
+                            <span class="text-danger">Обязательное поле для заполнения</span>
+                        @enderror
                     </div>
                     <div class="form-group">
-                        <select class="form-control" name="city_id" id="city">
-                            <option value="0">Выбрать город</option>
+                        <select class="form-control" name="city_id" id="city" required>
+                            <option value="{{$item->city->id}}">{{$item->city->name}}</option>
 {{--                            <option value="{{($item)?$item->city->id:"0"}}" {{($item)?"selected='selected'":""}}>--}}
 {{--                                {{$item->city->name}}--}}
 {{--                            </option>--}}
@@ -76,7 +88,7 @@
                             @endforeach
                         </select>
                         @error('category_id')
-                            <span class="text-danger">{{$message}}</span>
+                            <span class="text-danger">Обязательное поле для заполнения</span>
                         @enderror
                     </div>
                     <div class="form-group">
@@ -89,21 +101,31 @@
                             @endforeach
                         </select>
                         @error('brand_id')
-                            <span class="text-danger">{{$message}}</span>
+                            <span class="text-danger">Обязательное поле для заполнения</span>
                         @enderror
                     </div>
                     <div class="form-group">
                         <input type="text" class="form-control" placeholder="Наименование оборудования/техники" name="name"
                         value="{{$item->name}}">
                         @error('name')
-                            <span class="text-danger">{{$message}}</span>
+                        {{-- <span class="text-danger">{{$message}}</span>--}}
+                            <span class="text-danger">Обязательное поле для заполнения</span>
                         @enderror
                     </div>
+
+                    <div class="form-group">
+                        <input type="number" class="form-control" placeholder="год выпуска" name="year" value="{{$item->year}}" required>
+                        @error('year')
+                            <span class="text-danger">Обязательное поле для заполнения</span>
+                        @enderror
+                    </div>
+
                     <div class="form-group">
                         <textarea class="form-control" rows="3" placeholder="Описание оборудования/техники" name="description">{{$item->description}}
                         </textarea>
                         @error('description')
-                            <span class="text-danger">{{$message}}</span>
+                    {{-- <span class="text-danger">{{$message}}</span>--}}
+                            <span class="text-danger">Обязательное поле для заполнения</span>
                         @enderror
                     </div>
                     <div class="form-group">
@@ -119,20 +141,23 @@
                             @endfor
                         </select>
                         @error('option')
-                            <span class="text-danger">{{$message}}</span>
+                            {{-- <span class="text-danger">{{$message}}</span>--}}
+                            <span class="text-danger">Обязательное поле для заполнения</span>
                         @enderror
                     </div>
                     <div class="form-group">
                         <input type="number" class="form-control" placeholder="Цена аренды за 1 час/продажи" name="price"
                                value="{{$item->price}}">
                         @error('price')
-                            <span class="text-danger">{{$message}}</span>
+                        {{-- <span class="text-danger">{{$message}}</span>--}}
+                            <span class="text-danger">Обязательное поле для заполнения</span>
                         @enderror
                     </div>
                     <div class="form-group">
                         <input type="number" class="form-control" placeholder="количество" name="quantity" value="{{$item->quantity}}">
                         @error('quantity')
-                            <span class="text-danger">{{$message}}</span>
+                        {{-- <span class="text-danger">{{$message}}</span>--}}
+                            <span class="text-danger">Обязательное поле для заполнения</span>
                         @enderror
                     </div>
                     <div class="form-group text-right mt-3">

@@ -25,6 +25,7 @@ class AddItemRequest extends FormRequest
     {
         return [
             'name'=>'string|required',
+            'year'=>'numeric|required',
             'description'=>'string|required',
             'price'=>'required|numeric',
             'quantity'=>'required|numeric',

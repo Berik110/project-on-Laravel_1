@@ -20,22 +20,24 @@
             <form action="{{route('toAddAdv')}}" method="post" enctype="multipart/form-data">
                 @csrf
                 <input type="hidden" name="user_id" value="{{$user->id}}">
+
                 <div class="form-group">
                     <label>Выбрать Область</label>
-                    <select class="form-control" name="category_id" id="region" required>
+                    <select class="form-control" name="region_id" id="region" required>
                         <option value="0">Область</option>
                         @foreach($regions as $region)
                             <option value="{{$region->id}}">{{$region->name}}</option>
                         @endforeach
                     </select>
+                    @error('region_id')
+                    <span class="text-danger">Обязательное поле для заполнения</span>
+                    @enderror
                 </div>
+
                 <div class="form-group">
                     <label>Выбрать город</label>
                     <select class="form-control" name="city_id" id="city" required>
 {{--                        <option value="0">город</option>--}}
-                        {{-- @foreach($regions as $region)--}}
-                        {{--   <option value="{{$region->id}}">{{$region->name}}</option>--}}
-                        {{-- @endforeach--}}
                     </select>
                     @error('city_id')
                         <span class="text-danger">Обязательное поле для заполнения</span>
@@ -51,10 +53,10 @@
                         @endforeach
                     </select>
                     @error('category_id')
-{{--                        <span class="text-danger">{{$message}}</span>--}}
                         <span class="text-danger">Обязательное поле для заполнения</span>
                     @enderror
                 </div>
+
                 <div class="form-group">
                     <label>Выбрать брэнд</label>
                     <select class="form-control" name="brand_id" required>
@@ -64,18 +66,26 @@
                         @endforeach
                     </select>
                     @error('brand_id')
-{{--                        <span class="text-danger">{{$message}}</span>--}}
                         <span class="text-danger">Обязательное поле для заполнения</span>
                     @enderror
                 </div>
+
                 <div class="form-group">
                     <label>Наименование оборудования/техники</label>
                     <input type="text" class="form-control" name="name" required>
                     @error('name')
-{{--                        <span class="text-danger">{{$message}}</span>--}}
-                    <span class="text-danger">Обязательное поле для заполнения</span>
+                        <span class="text-danger">Обязательное поле для заполнения</span>
                     @enderror
                 </div>
+
+                <div class="form-group">
+                    <label>Год выпуска</label>
+                    <input type="number" class="form-control" name="year" required>
+                    @error('year')
+                        <span class="text-danger">Обязательное поле для заполнения</span>
+                    @enderror
+                </div>
+
                 <div class="form-group">
                     <label>Описание оборудования/техники</label>
                     <textarea class="form-control" rows="3" name="description"></textarea>
@@ -84,6 +94,7 @@
                     <span class="text-danger">Обязательное поле для заполнения</span>
                     @enderror
                 </div>
+
                 <div class="form-group">
                     <label>Выбрать опцию</label>
                     <select class="form-control" name="option">
@@ -92,24 +103,23 @@
                         <option value="2">Продажа</option>
                     </select>
                     @error('option')
-{{--                        <span class="text-danger">{{$message}}</span>--}}
-                    <span class="text-danger">Обязательное поле для заполнения</span>
+                        <span class="text-danger">Обязательное поле для заполнения</span>
                     @enderror
                 </div>
+
                 <div class="form-group">
                     <label>Цена аренды (за 1 час, сутки)/продажи</label>
                     <input type="number" class="form-control" name="price">
                     @error('price')
-{{--                        <span class="text-danger">{{$message}}</span>--}}
-                    <span class="text-danger">Обязательное поле для заполнения</span>
+                        <span class="text-danger">Обязательное поле для заполнения</span>
                     @enderror
                 </div>
+
                 <div class="form-group">
                     <label>Количество</label>
                     <input type="number" class="form-control" name="quantity">
                     @error('quantity')
-{{--                        <span class="text-danger">{{$message}}</span>--}}
-                    <span class="text-danger">Обязательное поле для заполнения</span>
+                        <span class="text-danger">Обязательное поле для заполнения</span>
                     @enderror
                 </div>
                 <div class="custom-file">
@@ -118,7 +128,7 @@
                     <label class="custom-file-label" for="customFile">Выбрать файл</label>
                     @error('url')
                     {{--<span class="text-danger">{{$message}}</span>--}}
-                    <span class="text-danger">Файл должен быть изображением</span>
+                        <span class="text-danger">Файл должен быть изображением</span>
                     @enderror
                 </div>
                 <div class="form-group text-right mt-3">

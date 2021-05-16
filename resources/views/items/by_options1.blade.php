@@ -79,9 +79,20 @@
                 @foreach($items as $item)
                     <div class="card bg-light mr-3 mb-3" style="width: 16rem;">
                         <a href="{{route('details', ['item_id'=>$item->id])}}" style="text-decoration: none; color: black; font-size: 1rem;">
-                            <img src="{{$item->images->first()['url']}}" class="card-img-top" alt="...">
+                        {{-- <img src="{{$item->images->first()['url']}}" class="card-img-top" alt="...">--}}
+                            @if($item->images->first()['url']!=null)
+                                <img src="{{asset('storage/'.$item->images->first()['url'])}}" class="card-img-top" alt="...">
+                            @else
+                                <img src="{{asset('/images/noImg.png')}}" class="card-img-top" alt="...">
+                            @endif
                             <div class="card-body">
-                                <p class="card-text text-center font-weight-bold">{{$item->brand->name}} - {{$item->name}}</p>
+                                <p class="card-text text-center font-weight-bold">{{$item->brand->name}} - {{$item->name}}
+                                    @auth
+                                        @if($item->user_id==$user->id)
+                                            <span class="text-danger"><i class="fas fa-flag"></i></span>
+                                        @endif
+                                    @endauth
+                                </p>
                                 <p class="card-text text-center">{{(($item->option==1)?"Аренда":"Продажа")}}, цена {{number_format($item->price,0,'.','.')}} тг.</p>
                             </div>
                         </a>

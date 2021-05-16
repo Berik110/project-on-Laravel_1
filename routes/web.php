@@ -70,3 +70,6 @@ Route::get('/details/change', [\App\Http\Controllers\ItemController::class, 'cha
 Route::delete('/details/change', [\App\Http\Controllers\ItemController::class, 'deleteItem'])->name('todeleteItem');
 Route::put('/details/change', [\App\Http\Controllers\ItemController::class, 'updateItem'])->name('updateItem');
 Route::put('/details/change/img', [\App\Http\Controllers\ItemController::class, 'updateImg']);
+
+Route::get('/regions/{id}', [\App\Http\Controllers\RegionController::class, 'getCity'])->name('getCity');
+Route::get('/reg/{id}', [\App\Http\Controllers\RegionController::class, 'cities'])->name('cities');

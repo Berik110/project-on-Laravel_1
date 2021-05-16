@@ -3,11 +3,11 @@
     <title>Project on Laravel-1</title>
     @include('layout.header')
 </head>
-<body class="mb-5">
+<body class="mb-1">
 <div class="container-fluid">
     @include('layout.navbar')
-    @include('auth.login')
-    @include('auth.register')
+{{--    @include('auth.login') Подключаем если будем пользоваться login через Модальное окно--}}
+{{--    @include('auth.register') Подключаем если будем пользоваться register через Модальное окно--}}
 </div>
 
 <div class="container">
@@ -18,6 +18,7 @@
 <div class="container-fluid">
     @include('layout.footer')
 </div>
+@yield('custom.js')
 </html>
 
 

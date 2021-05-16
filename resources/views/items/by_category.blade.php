@@ -5,7 +5,8 @@
             <nav aria-label="breadcrumb" >
                 <ol class="breadcrumb" style="background-color: white">
                     <li class="breadcrumb-item"><a href="{{'/'}}">Главная страница</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Техника-оборудования</li>
+{{--                    <li class="breadcrumb-item active" aria-current="page">{{$category?$category->name:''}}</li>--}}
+                    <li class="breadcrumb-item active" aria-current="page">Техника</li>
                 </ol>
             </nav>
         </div>
@@ -90,26 +91,29 @@
                 @foreach($items as $item)
                     <div class="card bg-light mr-3 mb-3" style="width: 16rem;">
                         <a href="{{route('details', ['item_id'=>$item->id])}}" style="text-decoration: none; color: black; font-size: 1rem;">
-                            <img src="{{$item->images->first()['url']}}" class="card-img-top" alt="...">
-{{--                            @foreach($item->images as $img)--}}
-{{--                                <img src="{{asset('storage/'.$img)}}" class="card-img-top" alt="...">--}}
-{{--                            @endforeach--}}
+                        {{-- <img src="{{$item->images->first()['url']}}" class="card-img-top" alt="...">--}}
+
+                            @if($item->images->first()['url']!=null)
+                                <img src="{{asset('storage/'.$item->images->first()['url'])}}" class="card-img-top" alt="...">
+                            @else
+                                <img src="{{asset('/images/noImg.png')}}" class="card-img-top" alt="...">
+                            @endif
+                                {{-- @foreach($item->images as $img)--}}
+                                {{--    <img src="{{asset('storage/'.$img)}}" class="card-img-top" alt="...">--}}
+                                {{-- @endforeach--}}
                             <div class="card-body">
-                                <p class="card-text text-center font-weight-bold">{{$item->brand->name}} - {{$item->name}}
+                                <p class="card-text text-center">{{$item->brand->name}} - {{$item->name}}, {{$item->year}}г.
                                     @auth
                                         @if($item->user_id==$user->id)
                                             <span class="text-danger"><i class="fas fa-flag"></i></span>
                                         @endif
                                     @endauth
                                 </p>
-                                <p class="card-text text-center">{{(($item->option==1)?"Аренда":"Продажа")}}, цена {{number_format($item->price,0,'.','.')}} тг.</p>
+                                <p class="card-text text-center font-weight-bold">{{(($item->option==1)?"Аренда":"Продажа")}}, {{number_format($item->price,0,'.','.')}} тг.</p>
                             </div>
                         </a>
                     </div>
                 @endforeach
-{{--                    <div class="col-md-6">--}}
-{{--                        {{$items->appends(['category_id'=>request()->category_id])->links()}}--}}
-{{--                    </div>--}}
                 @endif
             </div>
         </div>

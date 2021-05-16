@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AddItemRequest;
+use App\Http\Requests\ValidateImgStore;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\City;
@@ -128,7 +129,7 @@ class ItemController extends Controller
 
     public function itemsByCategory(Request $request)
     {
-//        $items = Item::where('category_id', $request->get('category_id'))->paginate(6); // используем этот вариант
+//        $items = Item::where('category_id', $request->get('category_id'))->paginate(3); // используем этот вариант
 //        $items = Item::where('category_id', $request->get('category_id'))->simplePaginate(6);
         $items = Item::where('category_id', $request->get('category_id'))->get();
         $categories = Category::all();
@@ -136,8 +137,9 @@ class ItemController extends Controller
         $user = Auth::user();
         $regions = Region::all();
         $cities = City::all();
+        $category = Category::find($request->get('category_id'));
 
-        return view('items.by_category', compact('items', 'categories', 'brands', 'user', 'regions', 'cities'));
+        return view('items.by_category', compact('items', 'categories', 'brands', 'user', 'regions', 'cities', 'category'));
     }
 
 
@@ -153,9 +155,10 @@ class ItemController extends Controller
         $items = Item::where('option', 1)->get();
         $regions = Region::all();
         $cities = City::all();
+        $user = Auth::user();
 //        $items = Item::where('option', 1)->paginate(6);
 
-        return view('items.by_options1', compact('items', 'categories', 'brands', 'regions', 'cities'));
+        return view('items.by_options1', compact('items', 'categories', 'brands', 'regions', 'cities', 'user'));
     }
 
     public function option2(){
@@ -164,9 +167,10 @@ class ItemController extends Controller
         $items = Item::where('option', 2)->get();
         $regions = Region::all();
         $cities = City::all();
+        $user = Auth::user();
 //        $items = Item::where('option', 2)->paginate(6);
 
-        return view('items.by_options2', compact('items', 'categories', 'brands', 'regions', 'cities'));
+        return view('items.by_options2', compact('items', 'categories', 'brands', 'regions', 'cities', 'user'));
     }
 
     public function forParts(){
@@ -237,7 +241,7 @@ class ItemController extends Controller
         $cities = City::all();
         $user = Auth::user();
 
-        return view('items.by_category', compact('categories', 'brands', 'items', 'user', 'cities', 'regions'));
+        return view('items.by_category', compact('categories', 'brands', 'items', 'user', 'cities', 'regions', 'category'));
     }
 
 
@@ -269,6 +273,9 @@ class ItemController extends Controller
 
     public function updateItem(AddItemRequest $request)
     {
+//        $request->validate([
+//        'regiond_id'=>'required'
+//    ]);
         /*Новая версия для сохранения если много полей*/
         Item::where('id', $request->id)->update($request->except('id', '_method', '_token', 'region_id'));
         $id = $request->id;
@@ -287,17 +294,22 @@ class ItemController extends Controller
     }
 
 
-    public function updateImg(Request $request)
+    public function updateImg(Request $request, ValidateImgStore $req)
     {
         $item = Item::find($request->get('id'));
-        $file = $request->file('image');
-        $path = '/images/'.$file->getClientOriginalName();
-        $file->move('images/', $file->getClientOriginalName());
+        /* 1 вариант как по курсу */
+//        $file = $request->file('image');
+//        $path = '/images/'.$file->getClientOriginalName();
+//        $file->move('images/', $file->getClientOriginalName());
 
-        ItemImage::where('item_id', $request->get('id'))->update(['url'=>$path]);
-//        ItemImage::create(['url'=>$path, 'item_id'=>$item->id]);
+        /* 2 вариант */
+        if ($req->hasFile('url')){
+            $folder = date('Y-m-d');
+            $path = $req->file('url')->store("images/{$folder}", "public");
+        }
+
+        ItemImage::where('item_id', $req->get('id'))->update(['url'=>$path]);
         return redirect('/details/change?id='.$item->id);
     }
-
 
 }
