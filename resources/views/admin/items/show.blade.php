@@ -66,65 +66,62 @@
                         </button>
                     </div>
                     <div class="modal-body">
-{{--                        <div class="form-group">--}}
-{{--                            <label>Выбрать категорию</label>--}}
-{{--                            <select name="category_id" class="form-control">--}}
-{{--                                @foreach($categories as $category)--}}
-{{--                                    <option value="{{$category->id}}">{{$category->name}}</option>--}}
-{{--                                @endforeach--}}
-{{--                            </select>--}}
-{{--                            @error('category_id')--}}
-{{--                                <span class="text-danger">{{$message}}</span>--}}
-{{--                            @enderror--}}
-{{--                        </div>--}}
-{{--                        <div class="form-group">--}}
-{{--                            <label>Выбрать брэнд</label>--}}
-{{--                            <select name="brand_id" class="form-control">--}}
-{{--                                @foreach($brands as $brand)--}}
-{{--                                    <option value="{{$brand->id}}">{{$brand->name}}</option>--}}
-{{--                                @endforeach--}}
-{{--                            </select>--}}
-{{--                            @error('brand_id')--}}
-{{--                                <span class="text-danger">{{$message}}</span>--}}
-{{--                            @enderror--}}
-{{--                        </div>--}}
-{{--                        <div class="form-group">--}}
-{{--                            <label>Наименование</label>--}}
-{{--                            <input type="text" class="form-control" name="name" value="{{$item->name}}">--}}
-{{--                            @error('name')--}}
-{{--                                <span class="text-danger">{{$message}}</span>--}}
-{{--                            @enderror--}}
-{{--                        </div>--}}
-{{--                        <div class="form-group">--}}
-{{--                            <label>Описание</label>--}}
-{{--                            <textarea class="form-control" name="description" rows="3">{{$item->description}}</textarea>--}}
-{{--                            @error('description')--}}
-{{--                                <span class="text-danger">{{$message}}</span>--}}
-{{--                            @enderror--}}
-{{--                        </div>--}}
-{{--                        <div class="form-group">--}}
-{{--                            <label>Цена</label>--}}
-{{--                            <input type="text" class="form-control" name="price" value="{{$item->price}}">--}}
-{{--                            @error('price')--}}
-{{--                                <span class="text-danger">{{$message}}</span>--}}
-{{--                            @enderror--}}
-{{--                        </div>--}}
-{{--                        <div class="form-group">--}}
-{{--                            <label>Количество</label>--}}
-{{--                            <input type="text" class="form-control" name="quantity" value="{{$item->quantity}}">--}}
-{{--                            @error('quantity')--}}
-{{--                                <span class="text-danger">{{$message}}</span>--}}
-{{--                            @enderror--}}
-{{--                        </div>--}}
-{{--                        <div class="form-group">--}}
-{{--                            <label>Опция</label>--}}
-{{--                            <input type="text" class="form-control" name="option" value="{{$item->option}}">--}}
-{{--                            @error('option')--}}
-{{--                                <span class="text-danger">{{$message}}</span>--}}
-{{--                            @enderror--}}
-{{--                        </div>--}}
                         <div class="form-group">
-                            <select class="form-control" name="category_id">
+                            <select class="form-control" name="region_id" id="region" required>
+                                <option value="0">Выбрать Область</option>
+                                @foreach($regions as $region)
+                                    <option value="{{$region->id}}" {{($region->id==$item->city->region->id)?"selected='selected'":""}}>
+                                        {{$region->name}}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('region_id')
+                                <span class="text-danger">Обязательное поле для заполнения</span>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <select class="form-control" name="city_id" id="city" required>
+                                <option value="{{$item->city->id}}">{{$item->city->name}}</option>
+                            </select>
+                            @error('city_id')
+                                <span class="text-danger">Обязательное поле для заполнения</span>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <select class="form-control" name="option_id" id="option" required>
+                                <option value="0">Выбрать опцию</option>
+                                @foreach($options as $option)
+                                    <option value="{{$option->id}}" {{($option->id==$item->option_id)?"selected='selected'":""}}>
+                                        {{$option->name}}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('option_id')
+                                <span class="text-danger">Обязательное поле для заполнения</span>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <select class="form-control" name="rent_id" id="rent" required>
+                                <option value="{{$item->rental->id}}">{{$item->rental->name}}</option>
+                            </select>
+                            @error('rent_id')
+                                <span class="text-danger">Обязательное поле для заполнения</span>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <input type="number" class="form-control" placeholder="Цена аренды за 1 час/продажи" name="price"
+                                   value="{{$item->price}}" required>
+                            @error('price')
+                                <span class="text-danger">{{$message}}</span>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <select class="form-control" name="category_id" required>
                                 <option value="0">Выбрать категорию</option>
                                 @foreach($categories as $category)
                                     <option value="{{$category->id}}" {{($category->id==$item->category_id)?"selected='selected'":""}}>
@@ -136,8 +133,9 @@
                                 <span class="text-danger">{{$message}}</span>
                             @enderror
                         </div>
+
                         <div class="form-group">
-                            <select class="form-control" name="brand_id">
+                            <select class="form-control" name="brand_id" required>
                                 <option value="0">Выбрать брэнд</option>
                                 @foreach($brands as $brand)
                                     <option value="{{$brand->id}}" {{($brand->id==$item->brand_id)?"selected='selected'":""}}>
@@ -149,46 +147,37 @@
                                 <span class="text-danger">{{$message}}</span>
                             @enderror
                         </div>
+
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Наименование оборудования/техники" name="name"
-                                   value="{{$item->name}}">
+                            <input type="text" class="form-control" placeholder="Наименование оборудования/техники или модель" name="name"
+                                   value="{{$item->name}}" required>
                             @error('name')
                                 <span class="text-danger">{{$message}}</span>
                             @enderror
                         </div>
+
+                        <div class="form-group">
+                            <input type="number" class="form-control" placeholder="год выпуска" name="year" value="{{$item->year}}" required>
+                            @error('year')
+                                <span class="text-danger">Обязательное поле для заполнения</span>
+                            @enderror
+                        </div>
+
                         <div class="form-group">
                         <textarea class="form-control" rows="3" placeholder="Описание оборудования/техники" name="description">{{$item->description}}
                         </textarea>
                             @error('description')
-                                <span class="text-danger">{{$message}}</span>
+                                <span class="text-danger">Обязательное поле для заполнения</span>
                             @enderror
                         </div>
-                        <div class="form-group">
-                            <select class="form-control" name="option" value="{{$item->option}}">
-                                @for($i=1; $i<=2; $i++)
-                                    <option  {{($item->option==$i) ? "selected='selected'":""}}?>
-                                        @if($i==1)
-                                            {{$i.'-аренда'}}
-                                        @elseif($i==2)
-                                            {{$i.'-продажа'}}
-                                        @endif
-                                    </option>
-                                @endfor
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <input type="number" class="form-control" placeholder="Цена аренды за 1 час/продажи" name="price"
-                                   value="{{$item->price}}">
-                            @error('price')
-                                <span class="text-danger">{{$message}}</span>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <input type="number" class="form-control" placeholder="количество" name="quantity" value="{{$item->quantity}}">
-                            @error('quantity')
-                                <span class="text-danger">{{$message}}</span>
-                            @enderror
-                        </div>
+
+                        {{--                        <div class="form-group">--}}
+                        {{--                            <input type="number" class="form-control" placeholder="количество" name="quantity" value="{{$item->quantity}}">--}}
+                        {{--                            @error('quantity')--}}
+                        {{--                                <span class="text-danger">{{$message}}</span>--}}
+                        {{--                            @enderror--}}
+                        {{--                        </div>--}}
+
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
@@ -198,4 +187,59 @@
             </div>
         </div>
     </div>
+@endsection
+@section('custom.js')
+    <script type="text/javascript">
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $(document).ready(function (){
+            $('select[name="region_id"]').on('change', function (){
+                var region_id = $(this).val();
+
+                if (region_id){
+                    $.ajax({
+                        url: '/reg/'+region_id,
+                        type: 'GET',
+                        dataType: 'json',
+                        success: function (data) {
+                            console.log(data);
+
+                            $('select[name="city_id"]').empty();
+                            $.each(data, function (key, value){
+                                $('select[name="city_id"]').append('<option value="'+key+'">' + value + '</option>');
+                            })
+                        }
+                    });
+                } else {
+                    $('select[name="city_id"]').empty();
+                }
+            });
+
+            /* выбор опции Аренды/продажи/сервиса */
+            $('select[id="option"]').on('change', function (){
+                var option_id = $(this).val();
+                // console.log(region_id);
+                if (option_id){
+                    $.ajax({
+                        url: '/opt/'+option_id,
+                        type: 'GET',
+                        dataType: 'json',
+                        success: function (data) {
+                            console.log(data);
+
+                            $('select[name="rent_id"]').empty();
+                            $.each(data, function (key, value){
+                                $('select[name="rent_id"]').append('<option value="'+key+'">' + value + '</option>');
+                            });
+                        }
+                    });
+                } else {
+                    $('select[name="rent_id"]').empty();
+                }
+            });
+        });
+    </script>
 @endsection

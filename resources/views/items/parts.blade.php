@@ -41,7 +41,8 @@
 {{--        </div>--}}
         <div class="col-md-10 mt-5 mx-auto">
             <div class="row justify-content-center">
-                <p class="display-4">Данная страница на разработке ))</p>
+                <p class="display-4">Данная страница на разработке.</p>
+{{--                <p style="font-size: 3rem">Данная страница на разработке.</p>--}}
             </div>
         </div>
     </div>

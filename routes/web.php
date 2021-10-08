@@ -47,6 +47,7 @@ Route::group([
         Route::put('/', [CategoryController::class, 'update'])->name('categoryUpdate');
     });
 
+    //items
     Route::prefix('item')->group(function (){
         Route::get('/', [ItemController::class, 'index'])->name('items');
         Route::post('/', [ItemController::class, 'store'])->name('itemInsert');
@@ -61,15 +62,19 @@ Route::get('/advertpage', [App\Http\Controllers\HomeController::class, 'addAdvPa
 Route::post('/', [App\Http\Controllers\HomeController::class, 'storeAdd'])->name('toAddAdv');
 Route::get('/categories', [App\Http\Controllers\ItemController::class, 'itemsByCategory'])->name('categories');
 Route::get('/details', [App\Http\Controllers\ItemController::class, 'getDetails'])->name('details');
-Route::get('/rental', [App\Http\Controllers\ItemController::class, 'option1']);
-Route::get('/sell', [App\Http\Controllers\ItemController::class, 'option2']);
-Route::get('/parts', [App\Http\Controllers\ItemController::class, 'forParts']);
+Route::get('/rental', [App\Http\Controllers\ItemController::class, 'option1'])->name('rental');
+Route::get('/sell', [App\Http\Controllers\ItemController::class, 'option2'])->name('sell');
+Route::get('/service', [App\Http\Controllers\ItemController::class, 'option3'])->name('service');
+Route::get('/parts', [App\Http\Controllers\ItemController::class, 'option4'])->name('parts');
 Route::get('/search_items', [App\Http\Controllers\ItemController::class, 'search'])->name('search');
-Route::get('/profile', [\App\Http\Controllers\UserController::class, 'profilePage'])->name('profile');
+Route::get('/profile', [\App\Http\Controllers\UserController::class, 'profilePage'])->name('profile')->middleware('auth');
 Route::get('/details/change', [\App\Http\Controllers\ItemController::class, 'changeItem'])->name('change');
 Route::delete('/details/change', [\App\Http\Controllers\ItemController::class, 'deleteItem'])->name('todeleteItem');
 Route::put('/details/change', [\App\Http\Controllers\ItemController::class, 'updateItem'])->name('updateItem');
 Route::put('/details/change/img', [\App\Http\Controllers\ItemController::class, 'updateImg']);
+Route::get('/setting', [\App\Http\Controllers\UserController::class, 'settingPage'])->name('setting')->middleware('auth');
+Route::put('/setting/saves', [\App\Http\Controllers\UserController::class, 'settingSavePage'])->name('save_setting');
 
 Route::get('/regions/{id}', [\App\Http\Controllers\RegionController::class, 'getCity'])->name('getCity');
 Route::get('/reg/{id}', [\App\Http\Controllers\RegionController::class, 'cities'])->name('cities');
+Route::get('/opt/{option_id}', [\App\Http\Controllers\RentController::class, 'rentalOptions'])->name('rentalOptions');

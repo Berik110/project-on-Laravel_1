@@ -11,10 +11,10 @@
                 </button>
             </div>
             <div class="modal-body">
-                    <div class="form-group">
-                        <label>Наименование брэнда</label>
-                        <input type="text" class="form-control" name="name">
-                    </div>
+                <div class="form-group">
+                    <label>Наименование брэнда</label>
+                    <input type="text" class="form-control" name="name">
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>

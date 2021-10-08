@@ -19,7 +19,7 @@ class CategoryController extends Controller
     /* Добавление Категории */
     public function store(Request $request){
         $request->validate([
-            'name' => 'required',
+            'name' => 'required|string',
             'cat_url'=>'required'
         ]);
         $name = $request->get('name');

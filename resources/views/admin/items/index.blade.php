@@ -41,13 +41,13 @@
                 <tr>
                     <th>#</th>
                     <th>name</th>
-                    <th style="width:20%">description</th>
+{{--                    <th style="width:20%">description</th>--}}
                     <th>price</th>
-                    <th>quantity</th>
                     <th>option</th>
+                    <th>rental option</th>
                     <th>brand</th>
                     <th>category</th>
-                    <th>orders</th>
+{{--                    <th>orders</th>--}}
                     <th>created at</th>
                     <th style="width: 10%">Actions</th>
                 </tr>
@@ -57,13 +57,46 @@
                     <tr>
                         <td>{{$item->id}}</td>
                         <td>{{$item->name}}</td>
-                        <td>{{$item->description}}</td>
                         <td>{{$item->price}}</td>
-                        <td>{{$item->quantity}}</td>
-                        <td>{{($item->option == 1) ? 'Аренда' : 'Продажа' }}</td>
+                        <td>
+{{--                            {{($item->option == 1) ? 'Аренда' : 'Продажа' }}--}}
+                            @switch($item->option_id)
+                                @case(1)
+                                    Аренда
+                                @break
+
+                                @case(2)
+                                    Продажа
+                                @break
+
+                                @case(3)
+                                    Сервис / Услуги
+                                @break
+
+                                @default
+                                    -------
+                            @endswitch
+                        </td>
+                        <td>
+                            @switch($item->rent_id)
+                                @case(1)
+                                часовая ставка
+                                @break
+
+                                @case(2)
+                                дневная ставка
+                                @break
+
+                                @case(3)
+                                месячная ставка
+                                @break
+
+                                @default
+                                --------
+                            @endswitch
+                        </td>
                         <td>{{$item->brand->name}}</td>
                         <td>{{$item->category->name}}</td>
-                        <td>{{count($item->orders)}}</td>
                         <td>{{$item->created_at}}</td>
                         <td>
                             <a href="{{route('admin.itemShow', ['id'=>$item->id])}}" class="btn btn-success mb-1">Обновить</a>
@@ -89,34 +122,50 @@
             }
         });
 
-        $(document).ready(function () {
-            $('#region').change(function () {
-                var id = $(this).val();
+        $(document).ready(function (){
+            $('select[id="region"]').on('change', function (){
+                var region_id = $(this).val();
+                // console.log(region_id);
+                if (region_id){
+                    $.ajax({
+                        url: '/reg/'+region_id,
+                        type: 'GET',
+                        dataType: 'json',
+                        success: function (data) {
+                            console.log(data);
 
-                $('#city').find('option').not(':first').remove();
-
-                $.ajax({
-                    url:'regions/'+id,
-                    type:'get',
-                    dataType:'json',
-                    success:function (response) {
-                        var len = 0;
-                        if (response.data != null) {
-                            len = response.data.length;
+                            $('select[name="city_id"]').empty();
+                            $.each(data, function (key, value){
+                                $('select[name="city_id"]').append('<option value="'+key+'">' + value + '</option>');
+                            });
                         }
+                    });
+                } else {
+                    $('select[name="city_id"]').empty();
+                }
+            });
 
-                        if (len>0) {
-                            for (var i = 0; i<len; i++) {
-                                var id = response.data[i].id;
-                                var name = response.data[i].name;
+            /* выбор опции Аренды/продажи/сервиса */
+            $('select[id="option"]').on('change', function (){
+                var option_id = $(this).val();
+                // console.log(region_id);
+                if (option_id){
+                    $.ajax({
+                        url: '/opt/'+option_id,
+                        type: 'GET',
+                        dataType: 'json',
+                        success: function (data) {
+                            console.log(data);
 
-                                var option = "<option value='"+id+"'>"+name+"</option>";
-
-                                $("#city").append(option);
-                            }
+                            $('select[name="rent_id"]').empty();
+                            $.each(data, function (key, value){
+                                $('select[name="rent_id"]').append('<option value="'+key+'">' + value + '</option>');
+                            });
                         }
-                    }
-                })
+                    });
+                } else {
+                    $('select[name="rent_id"]').empty();
+                }
             });
         });
     </script>

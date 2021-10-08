@@ -8,7 +8,9 @@ use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Item;
 use App\Models\ItemImage;
+use App\Models\Option;
 use App\Models\Region;
+use App\Models\Rent;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -42,16 +44,18 @@ class HomeController extends Controller
         $categories = Category::all();
         $brands = Brand::all();
         $regions = Region::all();
-        return view('addadvert', compact('categories', 'brands', 'user', 'regions'));
+        $options = Option::all();
+        $rents = Rent::all();
+        return view('addadvert', compact('categories', 'brands', 'user', 'regions', 'options', 'rents'));
     }
 
     public function storeAdd(AddItemRequest $req, ValidateImgStore $request)
     {
         $item = Item::create($req->all());
         /* 1 вариант  - было так согласно курсу */
-//        $file = $request->file('url');
-//        $path = '/images/'.$file->getClientOriginalName();
-//        $file->move('images/', $file->getClientOriginalName());
+//        $file = $request->file('url'); Достаем файл с request
+//        $path = '/images/'.$file->getClientOriginalName(); это путь
+//        $file->move('images/', $file->getClientOriginalName()); переместила файл в images
 //
 //        ItemImage::create(['url'=>$path, 'item_id'=>$item->id]);
 

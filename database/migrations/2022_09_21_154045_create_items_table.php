@@ -19,8 +19,12 @@ class CreateItemsTable extends Migration
             $table->integer("year");
             $table->string("description");
             $table->integer("price");
-            $table->string("quantity");
-            $table->string("option");
+//            $table->string("option");
+//            $table->string("rental_option")->nullable();
+            $table->unsignedBigInteger('option_id');
+            $table->foreign('option_id')->references("id")->on('options');
+            $table->unsignedBigInteger('rent_id');
+            $table->foreign('rent_id')->references("id")->on('rents');
             $table->unsignedBigInteger('brand_id');
             $table->unsignedBigInteger('category_id');
             $table->foreign('category_id')->references("id")->on('categories');

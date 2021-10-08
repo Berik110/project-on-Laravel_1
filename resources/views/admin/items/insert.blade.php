@@ -14,7 +14,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <select class="form-control" name="category_id" id="region">
+                        <select class="form-control" name="region_id" id="region" required>
                             <option value="0">Выбрать Область</option>
                             @foreach($regions as $region)
                                 <option value="{{$region->id}}">{{$region->name}}</option>
@@ -22,7 +22,7 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <select class="form-control" name="city_id" id="city">
+                        <select class="form-control" name="city_id" id="city" required>
                             <option value="0">Выбрать город</option>
                             @foreach($cities as $city)
                                 <option value="{{$city->id}}">{{$city->name}}</option>
@@ -33,7 +33,7 @@
                         @enderror
                     </div>
                     <div class="form-group">
-                        <select class="form-control" name="category_id">
+                        <select class="form-control" name="category_id" required value="{{ old('category_id') }}">
                             <option value="0">Выбрать Категорию</option>
                             @foreach($categories as $category)
                                 <option value="{{$category->id}}">{{$category->name}}</option>
@@ -44,8 +44,8 @@
                         @enderror
                     </div>
                     <div class="form-group">
-                        <select class="form-control" name="brand_id">
-                            <option value="0">Выбрать Брэнд</option>
+                        <select class="form-control" name="brand_id" required>
+                            <option value="0">Выбрать Марку</option>
                             @foreach($brands as $brand)
                                 <option value="{{$brand->id}}">{{$brand->name}}</option>
                             @endforeach
@@ -55,9 +55,14 @@
                         @enderror
                     </div>
                     <div class="form-group">
-                        <label>Наименование</label>
-                        <input type="text" class="form-control" placeholder="Наименование" name="name">
+                        <input type="text" class="form-control" placeholder="Наименование / модель" name="name" value="{{ old('name') }}" required>
                         @error('name')
+                            <span class="text-danger">Обязательное поле для заполнения</span>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <input type="number" class="form-control" name="year" placeholder="Год выпуска" value="{{ old('year') }}" required>
+                        @error('year')
                             <span class="text-danger">Обязательное поле для заполнения</span>
                         @enderror
                     </div>
@@ -67,30 +72,37 @@
                             <span class="text-danger">Обязательное поле для заполнения</span>
                         @enderror
                     </div>
+
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Цена" name="price">
-                        @error('price')
-                            <span class="text-danger">Обязательное поле для заполнения</span>
-                        @enderror
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Количество" name="quantity">
-                        @error('quantity')
-                            <span class="text-danger">Обязательное поле для заполнения</span>
-                        @enderror
-                    </div>
-                    <div class="form-group">
-                        <select class="form-control" name="option">
-                            <option selected disabled>Выбрать опцию</option>
-                            <option value="1">Аренда</option>
-                            <option value="2">Продажа</option>
+                        <select class="form-control" name="option_id" id="option" required value="{{ old('option_id') }}">
+                            <option value="0">Выбрать опцию</option>
+                            @foreach($options as $option)
+                                <option value="{{$option->id}}">{{$option->name}}</option>
+                            @endforeach
                         </select>
                         @error('option')
                             <span class="text-danger">Обязательное поле для заполнения</span>
                         @enderror
                     </div>
+
+                    <div class="form-group">
+                        <select class="form-control" name="rent_id" id="rent" required>
+                            <option value="0">Арендная ставка (указываете в случае аренды)</option>
+                            @foreach($rents as $rent)
+                                <option value="{{$rent->id}}">{{$rent->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="number" class="form-control" placeholder="Цена" name="price" value="{{ old('price') }}" min="0" required>
+                        @error('price')
+                            <span class="text-danger">Обязательное поле для заполнения</span>
+                        @enderror
+                    </div>
+
                     <div class="custom-file">
-                        <input name="itemImage" type="file" class="custom-file-input" id="customFile">
+                        <input name="url" type="file" class="custom-file-input" id="customFile">
                         <label class="custom-file-label" for="customFile">Выбрать файл</label>
                     </div>
                 </div>

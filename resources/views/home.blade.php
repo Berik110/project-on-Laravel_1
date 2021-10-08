@@ -3,11 +3,11 @@
 
     <div class="row mt-3 justify-content-center">
         @foreach($categories as $category)
-        <div class="card bg-light mr-3 mb-3" style="width: 16rem;">
+        <div class="card bg-light mr-3 mb-3 cards" style="width: 16rem;">
             <a href="{{route('categories', ['category_id'=>$category->id])}}" style="text-decoration: none; color: black; font-size: 1rem">
                 <img src="{{$category->cat_url}}" class="card-img-top" alt="...">
                 <div class="card-body">
-                    <p class="card-text text-center">{{$category->name}}</p>
+                    <p class="card-text text-center" style="font-size: 0.95rem;">{{$category->name}}</p>
                 </div>
             </a>
         </div>

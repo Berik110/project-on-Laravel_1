@@ -1,6 +1,6 @@
 @extends('layout.app')
 @section('content')
-    <div class="row mt-4" style="min-height: 400px">
+    <div class="row mt-4 p-2" style="min-height: 400px; background-color: #2d995b">
         <div class="col-md-3">
             <ul class="list-group">
                 <li class="list-group-item list-group-item-info" aria-disabled="true">
@@ -26,11 +26,11 @@
             </ul>
         </div>
         <div class="col-md-9 mt-3">
-            <h2 class="text-center mb-3">Личный кабинет админа</h2>
-            <p class="font-weight-bold text-primary">Количество категории - {{count($categories)}}</p>
-            <p class="font-weight-bold text-primary">Количество брэндов - {{count($brands)}}</p>
-            <p class="font-weight-bold text-primary">Всего опубликованных объявлении - {{count($items)}}</p>
-            <p class="font-weight-bold text-primary">Всего зарегестрированных пользователей - {{count($users)}}</p>
+            <h2 class="text-center mb-3 text-light">Личный кабинет админа</h2>
+            <p class="font-weight-bold text-light">Количество категории - {{count($categories)}}</p>
+            <p class="font-weight-bold text-light">Количество брэндов - {{count($brands)}}</p>
+            <p class="font-weight-bold text-light">Всего опубликованных объявлении - {{count($items)}}</p>
+            <p class="font-weight-bold text-light">Всего зарегестрированных пользователей - {{count($users)}}</p>
         </div>
     </div>
 @endsection

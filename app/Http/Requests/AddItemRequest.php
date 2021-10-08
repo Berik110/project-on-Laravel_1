@@ -28,10 +28,10 @@ class AddItemRequest extends FormRequest
             'year'=>'numeric|required',
             'description'=>'string|required',
             'price'=>'required|numeric',
-            'quantity'=>'required|numeric',
-            'option'=>'required',
-            'category_id'=>'required',
+            'option_id'=>'required|numeric',
+            'rent_id'=>'required|numeric',
             'brand_id'=>'required',
+            'category_id'=>'required',
             'city_id'=>'required',
         ];
     }

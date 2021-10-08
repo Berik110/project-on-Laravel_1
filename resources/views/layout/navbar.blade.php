@@ -9,20 +9,23 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mx-auto">
             <li class="nav-item mr-3">
-                <a href="{{'/'}}" class="nav-link">Главная страница</a>
+                <a href="{{'/'}}" class="nav-link {{request()->route()->named('home') ? 'active' : ''}}">Главная</a>
             </li>
             <li class="nav-item mr-3">
-                <a href="{{url('/rental')}}" class="nav-link">Аренда</a>
+                <a href="{{url('/rental')}}" class="nav-link {{request()->route()->named('rental') ? 'active' : ''}}">Аренда</a>
             </li>
             <li class="nav-item mr-3">
-                <a href="{{url('/sell')}}" class="nav-link">Продажа</a>
+                <a href="{{url('/sell')}}" class="nav-link {{request()->route()->named('sell') ? 'active' : ''}}">Продажа</a>
             </li>
             <li class="nav-item mr-3">
-                <a href="{{url('/parts')}}" class="nav-link">Запасные части</a>
+                <a href="{{url('/service')}}" class="nav-link {{request()->route()->named('service') ? 'active' : ''}}">Услуги</a>
+            </li>
+            <li class="nav-item mr-3">
+                <a href="{{url('/parts')}}" class="nav-link {{request()->route()->named('parts') ? 'active' : ''}}">Запасные части</a>
             </li>
             @auth
                 <li class="nav-item">
-                    <a href="{{route('adv')}}" class="nav-link">Разместить объявление</a>
+                    <a href="{{route('adv')}}" class="nav-link {{request()->route()->named('adv') ? 'active' : ''}}">Разместить объявление</a>
                 </li>
             @else
                 <li class="nav-item">
@@ -61,6 +64,7 @@
                         @if(\Illuminate\Support\Facades\Auth::user()->name=='admin')
                             <a class="dropdown-item" href="{{ route('admin.index') }}">Admin page</a>
                         @else
+                            <a class="dropdown-item" href="{{ route('setting') }}">Настройки</a>
                             <a class="dropdown-item" href="{{ route('profile') }}">Профайл</a>
                         @endif
                         <a class="dropdown-item" href="{{ route('logout') }}"

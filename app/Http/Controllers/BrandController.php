@@ -17,7 +17,7 @@ class BrandController extends Controller
     /* Добавление Брэнда */
     public function store(Request $request){
         $request->validate([
-            'name' => 'required'
+            'name' => 'required|string'
         ]);
 
         Brand::create($request->all());

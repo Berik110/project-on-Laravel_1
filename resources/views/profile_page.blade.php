@@ -19,7 +19,8 @@
 
     <div class="row mt-4 justify-content-center" style="min-height: 400px">
         <div class="col-md-9 mx-auto">
-            <h3 class="text-center">Личный кабинет {{$user->name}}</h3>
+{{--            <h4 class="text-center">Личный кабинет {{$user->name}}</h4>--}}
+            @if(count($items)>0)
             <p class="font-weight-bold mt-3">ваши объявления:</p>
             @foreach($items as $item)
                 @if($item->user_id==$user->id)
@@ -27,6 +28,10 @@
                     <p>{{$item->description}}</p>
                 @endif
             @endforeach
+            @else
+                <h4 class="mt-5">У вас пока нет объявлений на сайте</h4>
+                <p>Это легко исправить, <a href="{{route('adv')}}" style="font-weight: bold">подав их.</a></p>
+            @endif
         </div>
 
     </div>

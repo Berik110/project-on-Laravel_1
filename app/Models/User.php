@@ -47,4 +47,7 @@ class User extends Authenticatable
         return $this->role_id==Role::ADMIN_ROLE;
     }
 
+    public function products(){
+        return $this->hasMany(Item::class); // Many to One
+    }
 }

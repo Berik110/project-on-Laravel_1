@@ -19,7 +19,7 @@ class UserSeeder extends Seeder
             "name"=>"admin",
             "email"=>"admin@gmail.com",
             "password"=>bcrypt("password"),
-            "phone_number"=>123546,
+            "phone_number"=>87021105742,
             "role_id"=>Role::ADMIN_ROLE
         ]);
     }
