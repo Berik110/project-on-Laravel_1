@@ -25,6 +25,26 @@
                         Оборудования
                     </a>
                 </li>
+                <li class="list-group-item list-group-item-info mt-1">
+                    <a href="{{route('admin.regions')}}" style="text-decoration: none; color: black">
+                        Регионы
+                    </a>
+                </li>
+                <li class="list-group-item list-group-item-info mt-1">
+                    <a href="{{route('admin.cities')}}" style="text-decoration: none; color: black">
+                        Города
+                    </a>
+                </li>
+                <li class="list-group-item list-group-item-info mt-1">
+                    <a href="{{route('admin.options')}}" style="text-decoration: none; color: black">
+                        Опции
+                    </a>
+                </li>
+                <li class="list-group-item list-group-item-info mt-1">
+                    <a href="{{route('admin.options_types')}}" style="text-decoration: none; color: black">
+                        Подклассы Опции
+                    </a>
+                </li>
             </ul>
         </div>
         <div class="col-md-9">

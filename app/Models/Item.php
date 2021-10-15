@@ -12,7 +12,7 @@ class Item extends Model
     use SoftDeletes;
 
     protected $fillable=[
-        'name', 'year', 'description', 'price', 'option_id', 'rent_id', 'brand_id', 'category_id', 'city_id', 'user_id'
+        'name', 'year', 'description', 'price', 'option_id', 'rent_id', 'brand_id', 'category_id', 'city_id', 'user_id', 'srok'
     ];
 
     public function brand(){

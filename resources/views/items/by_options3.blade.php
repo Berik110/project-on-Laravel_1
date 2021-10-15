@@ -73,7 +73,7 @@
             <div class="row justify-content-center">
                 @if($items && count($items)>0)
                     @foreach($items as $item)
-                        <div class="card bg-light mr-3 mb-3" style="width: 16rem;">
+                        <div class="card bg-light mr-3 mb-3 cardes" style="width: 16rem;">
                             <a href="{{route('details', ['item_id'=>$item->id])}}" style="text-decoration: none; color: black; font-size: 1rem;">
                                 {{-- <img src="{{$item->images->first()['url']}}" class="card-img-top" alt="...">--}}
                                 <div class="img-container">
@@ -107,7 +107,7 @@
                                         @endauth
                                     </p>
                                     <p class="card-text text-center" style="font-size: 0.85rem">
-                                        {{ $item->year }}г., {{number_format($item->price,0,'.','.')}} тг.,  <span style="background-color: darkseagreen">{{ $item->city->name }}</span>
+                                        {{ $item->year }}г., {{number_format($item->price,0,'.','.')}} тг.,  <span style="background-color: dodgerblue; color: white">{{ $item->city->name }}</span>
                                         {{--                                    1 вариант--}}
                                         {{--                                    {{(($item->option==1)?"Аренда":"Продажа")}}, цена {{number_format($item->price,0,'.','.')}} тг.--}}
                                         {{--                                    2 вариант--}}

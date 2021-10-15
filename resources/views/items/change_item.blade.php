@@ -183,6 +183,8 @@
                         @enderror
                     </div>
 
+                    <input type="hidden" name="srok" value="{{ $item->srok }}">
+
                     <div class="form-group text-right mt-3">
                         <!-- Button trigger modal -->
                         <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">

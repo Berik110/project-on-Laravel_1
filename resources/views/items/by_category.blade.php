@@ -87,7 +87,7 @@
                     <h3 class="mt-5 text-center">Пока данных нет</h3>
                 @else
                 @foreach($items as $item)
-                    <div class="card bg-light mr-3 mb-3" style="width: 16rem;">
+                    <div class="card bg-light mr-3 mb-3 cardes" style="width: 16rem;">
                         <a href="{{route('details', ['item_id'=>$item->id])}}" style="text-decoration: none; color: black; font-size: 1rem;">
                         {{-- <img src="{{$item->images->first()['url']}}" class="card-img-top" alt="...">--}}
                             <div class="img-container">

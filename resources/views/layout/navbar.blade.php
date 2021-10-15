@@ -64,8 +64,8 @@
                         @if(\Illuminate\Support\Facades\Auth::user()->name=='admin')
                             <a class="dropdown-item" href="{{ route('admin.index') }}">Admin page</a>
                         @else
+                            <a class="dropdown-item" href="{{ route('profile') }}">Кабинет</a>
                             <a class="dropdown-item" href="{{ route('setting') }}">Настройки</a>
-                            <a class="dropdown-item" href="{{ route('profile') }}">Профайл</a>
                         @endif
                         <a class="dropdown-item" href="{{ route('logout') }}"
                            onclick="event.preventDefault();

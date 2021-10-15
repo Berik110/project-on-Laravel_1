@@ -134,6 +134,10 @@
                     @enderror
                 </div>
 
+                <div class="form-group">
+                    <input type="hidden" class="form-control" name="srok" value="{{date('Y-m-d H:i:s', time()+(60*2))}}" required>
+                </div>
+
                 <div class="form-group text-right mt-3">
                     <button class="btn btn-success">Добавить объявление</button>
                 </div>

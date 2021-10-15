@@ -1,9 +1,8 @@
 @extends('layout.app')
 @section('content')
+    @include('admin.cities.insert')
 
-{{--    @include('admin.brands.update')--}}
-
-<div class="row mt-4">
+    <div class="row mt-4">
         <div class="col-md-3">
             <ul class="list-group">
                 <li class="list-group-item list-group-item-info" aria-disabled="true">
@@ -51,48 +50,41 @@
         <div class="col-md-9">
             <!-- Button trigger modal -->
             <div class="text-right">
-                <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#updateBrand">
-                    Обновить Брэнд
+                <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#addCity">
+                    Добавить Город
                 </button>
             </div>
 
-
-            <div class="card mt-3">
-                <div class="card-body">
-                    {{$brand->name}}
-                </div>
-            </div>
+            <table class="table table-hover mt-3">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>name</th>
+                    <th>region</th>
+                    <th>created at</th>
+                    <th style="width: 10%">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach($cities as $city)
+                    <tr>
+                        <td>{{$city->id}}</td>
+                        <td>{{$city->name}}</td>
+                        <td>{{$city->region->name}}</td>
+                        <td>{{$city->created_at}}</td>
+                        <td>
+                            <a href="{{route('admin.cityShow', ['id'=>$city->id])}}" class="btn btn-success mb-1">Обновить</a>
+                            <form action="{{url('/admin/city/'.$city->id)}}" method="post">
+                                {{method_field('delete')}}
+                                @csrf
+                                {{--<input type="hidden" name="brand_id" value="{{$brand->id}}">--}}
+                                <button class="btn btn-danger">Удалить</button>
+                            </form>
+                        </td>
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
         </div>
     </div>
-
-
-<!-- Modal -->
-<div class="modal fade" id="updateBrand" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <form action="{{route('admin.brandUpdate')}}" method="post">
-                @csrf
-                {{method_field('put')}}
-                <input type="hidden" name="id" value="{{$brand->id}}">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Редактировать Брэнд</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label>Наименование</label>
-                        <input type="text" class="form-control" name="name" value="{{$brand->name}}">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
-                    <button class="btn btn-success">Сохранить</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
 @endsection
-

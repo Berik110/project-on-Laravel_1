@@ -57,7 +57,20 @@ class ItemController extends Controller
      */
     public function store(AddItemRequest $request)
     {
-        $item = Item::create($request->all());
+//        $item = Item::create($request->all());
+        $item = new \stdClass();
+        $item->name = $request->get('name');
+        $item->year = $request->get('year');
+        $item->description = $request->get('description');
+        $item->price = $request->get('price');
+        $item->option_id = $request->get('option_id');
+        $item->rent_id = $request->get('rent_id');
+        $item->brand_id = $request->get('brand_id');
+        $item->category_id = $request->get('category_id');
+        $item->city_id = $request->get('city_id');
+        $item->user_id = $request->get('user_id');
+        $item->srok = $request->get('srok');
+
         if ($request->hasFile('url')){
             $folder = date('Y-m-d');
             $path = $request->file('url')->store("images/{$folder}", "public");
@@ -144,7 +157,9 @@ class ItemController extends Controller
     {
 //        $items = Item::where('category_id', $request->get('category_id'))->paginate(3); // используем этот вариант
 //        $items = Item::where('category_id', $request->get('category_id'))->simplePaginate(6);
-        $items = Item::where('category_id', $request->get('category_id'))->get();
+        $items = Item::where('category_id', $request->get('category_id'))
+            ->where('srok', '>', date('Y-m-d H:i:s'))
+            ->get();
         $categories = Category::all();
         $brands = Brand::all();
         $user = Auth::user();
@@ -167,7 +182,10 @@ class ItemController extends Controller
     public function option1(){
         $categories = Category::all();
         $brands = Brand::all();
-        $items = Item::where('option_id', 1)->get();
+//        $items = Item::where('option_id', 1)->get();
+        $items = Item::where('option_id', 1)
+            ->where('srok', '>', date('Y-m-d H:i:s'))
+            ->get();
         $regions = Region::all();
         $cities = City::all();
         $user = Auth::user();
@@ -180,7 +198,10 @@ class ItemController extends Controller
     public function option2(){
         $categories = Category::all();
         $brands = Brand::all();
-        $items = Item::where('option_id', 2)->get();
+//        $items = Item::where('option_id', 2)->get();
+        $items = Item::where('option_id', 2)
+            ->where('srok', '>', date('Y-m-d H:i:s'))
+            ->get();
         $regions = Region::all();
         $cities = City::all();
         $user = Auth::user();
@@ -193,7 +214,10 @@ class ItemController extends Controller
     public function option3(){
         $categories = Category::all();
         $brands = Brand::all();
-        $items = Item::where('option_id', 3)->get();
+//        $items = Item::where('option_id', 3)->get();
+        $items = Item::where('option_id', 3)
+            ->where('srok', '>', date('Y-m-d H:i:s'))
+            ->get();
         $regions = Region::all();
         $cities = City::all();
         $user = Auth::user();
@@ -213,7 +237,7 @@ class ItemController extends Controller
         $options = Option::all();
 //        $items = Item::where('option', 2)->paginate(6);
         return view('items.parts');
-        return view('items.by_options4', compact('items', 'categories', 'brands', 'regions', 'cities', 'user', 'options'));
+//        return view('items.by_options4', compact('items', 'categories', 'brands', 'regions', 'cities', 'user', 'options'));
     }
 
     public function search(Request $request){
@@ -227,7 +251,9 @@ class ItemController extends Controller
         $city = $request->get('city_id');
         $region = $request->get('region_id');
 
-       $items = Item::all();
+//       $items = Item::all();
+       $items = Item::where('srok', '>', date('Y-m-d H:i:s'))
+           ->get();
 
         if ($category){
             $items =  $items->filter(function ($item) use ($category){
@@ -286,10 +312,12 @@ class ItemController extends Controller
     public function data(){
         $categories = Category::all();
         $brands = Brand::all();
-        $items = Item::all();
         $users = User::all();
+        $items = Item::all();
+        $itemsActive = Item::where('srok', '>', date('Y-m-d H:i:s'))->get();
+        $itemsArchives = Item::where('srok', '<', date('Y-m-d H:i:s'))->get();
 
-        return view('admin.index', compact('items', 'categories', 'brands', 'users'));
+        return view('admin.index', compact('items', 'categories', 'brands', 'users', 'itemsActive', 'itemsArchives'));
     }
 
 
@@ -311,13 +339,29 @@ class ItemController extends Controller
         return redirect('/');
     }
 
+    public function deleteItem2(Request $request){
+        Item::destroy($request->get("item_id"));
+        return redirect()->route('profile2');
+    }
+
     public function updateItem(AddItemRequest $request)
     {
-//        $request->validate([
-//        'regiond_id'=>'required'
-//    ]);
         /*Новая версия для сохранения если много полей*/
-        Item::where('id', $request->id)->update($request->except('id', '_method', '_token', 'region_id'));
+//        Item::where('id', $request->id)->update($request->except('id', '_method', '_token', 'region_id', 'srok'));
+
+        /*Обычная версия для сохранения */
+        $item = Item::find($request->get('id'));
+        $item->city_id = $request->get("city_id");
+        $item->option_id = $request->get("option_id");
+        $item->rent_id = $request->get("rent_id");
+        $item->price = $request->get("price");
+        $item->category_id = $request->get("category_id");
+        $item->brand_id = $request->get("brand_id");
+        $item->name = $request->get("name");
+        $item->year = $request->get("year");
+        $item->description = $request->get("description");
+//        $item->srok = $request->get("srok");
+        $item->save();
         $id = $request->id;
 
         return redirect('/details/change?id='.$id);
@@ -370,6 +414,31 @@ class ItemController extends Controller
 
         ItemImage::where('item_id', $req->get('id'))->update(['url'=>$path]);
         return redirect('/details/change?id='.$item->id);
+    }
+
+
+    public function deleteExtention(Request $request){
+        $item = Item::find($request->get('item_id'));
+
+        return view('items.del_ext', compact('item'));
+    }
+
+
+    public function prolonation_102030days(Request $request){
+        $item = Item::find($request->get('item_id'));
+        $item->srok = $request->get('srok');
+        $item->save();
+
+        $user = Auth::user();
+        $categories = Category::all();
+        $brands = Brand::all();
+        $items = Item::where('user_id', $user->id)
+            ->where('srok', '>', date('Y-m-d H:i:s'))
+            ->get();
+        $itemsArchives = Item::where('user_id', $user->id)
+            ->where('srok', '<', date('Y-m-d H:i:s'))
+            ->get();
+        return view('profile_page', compact('user', 'categories', 'brands', 'items', 'itemsArchives'))->with('success');
     }
 
 }

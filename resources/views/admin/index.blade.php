@@ -23,14 +23,40 @@
                         Оборудования
                     </a>
                 </li>
+                <li class="list-group-item list-group-item-info mt-1">
+                    <a href="{{route('admin.regions')}}" style="text-decoration: none; color: black">
+                        Регионы
+                    </a>
+                </li>
+                <li class="list-group-item list-group-item-info mt-1">
+                    <a href="{{route('admin.cities')}}" style="text-decoration: none; color: black">
+                        Города
+                    </a>
+                </li>
+                <li class="list-group-item list-group-item-info mt-1">
+                    <a href="{{route('admin.options')}}" style="text-decoration: none; color: black">
+                        Опции
+                    </a>
+                </li>
+                <li class="list-group-item list-group-item-info mt-1">
+                    <a href="{{route('admin.options_types')}}" style="text-decoration: none; color: black">
+                        Подклассы Опции
+                    </a>
+                </li>
             </ul>
         </div>
         <div class="col-md-9 mt-3">
             <h2 class="text-center mb-3 text-light">Личный кабинет админа</h2>
-            <p class="font-weight-bold text-light">Количество категории - {{count($categories)}}</p>
-            <p class="font-weight-bold text-light">Количество брэндов - {{count($brands)}}</p>
-            <p class="font-weight-bold text-light">Всего опубликованных объявлении - {{count($items)}}</p>
-            <p class="font-weight-bold text-light">Всего зарегестрированных пользователей - {{count($users)}}</p>
+            <p class="font-weight-bold text-light">Количество категории - <span class="text-warning">{{count($categories)}}</span></p>
+            <p class="font-weight-bold text-light">Количество брэндов - <span class="text-warning">{{count($brands)}}</span></p>
+            <p class="font-weight-bold text-light">Всего опубликованных объявлении - <span class="text-warning">{{count($items)}}</span>.
+                Из них активных - <span class="text-warning">{{count($itemsActive)}}</span>,
+                в архиве - <span class="text-warning">{{count($itemsArchives)}}</span>
+            </p>
+            <p class="font-weight-bold text-light">Всего зарегестрированных пользователей - <span class="text-warning">
+                    {{count($users)}}
+                </span>
+            </p>
         </div>
     </div>
 @endsection

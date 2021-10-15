@@ -33,6 +33,8 @@ class CreateItemsTable extends Migration
             $table->foreign('city_id')->references('id')->on('cities')->cascadeOnDelete();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
+//            $table->bigInteger('srok');
+            $table->timestamp('srok');
             $table->timestamps();
             $table->softDeletes();
         });

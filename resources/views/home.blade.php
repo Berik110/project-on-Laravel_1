@@ -1,9 +1,16 @@
 @extends('layout.app')
 @section('content')
 
+
+{{--//$srok = time();--}}
+{{--        echo date('Y-m-d H:i:s');--}}
+{{--echo now();--}}
+
+{{--        echo time();--}}
+
     <div class="row mt-3 justify-content-center">
         @foreach($categories as $category)
-        <div class="card bg-light mr-3 mb-3 cards" style="width: 16rem;">
+        <div class="card bg-light mr-3 mb-3 cardss" style="width: 16rem;">
             <a href="{{route('categories', ['category_id'=>$category->id])}}" style="text-decoration: none; color: black; font-size: 1rem">
                 <img src="{{$category->cat_url}}" class="card-img-top" alt="...">
                 <div class="card-body">

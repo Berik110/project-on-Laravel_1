@@ -1,7 +1,6 @@
 @extends('layout.app')
 @section('content')
-    @include('admin.brands.insert')
-    @include('admin.brands.update')
+    @include('admin.regions.insert')
 
     <div class="row mt-4">
         <div class="col-md-3">
@@ -17,7 +16,7 @@
                     </a>
                 </li>
                 <li class="list-group-item list-group-item-info mt-1">
-                    <a href="{{route('admin.brands')}}" style="text-decoration: none; color: black">
+                    <a href="/admin/brand" style="text-decoration: none; color: black">
                         Брэнд
                     </a>
                 </li>
@@ -41,47 +40,43 @@
                         Опции
                     </a>
                 </li>
-                <li class="list-group-item list-group-item-info mt-1">
-                    <a href="{{route('admin.options_types')}}" style="text-decoration: none; color: black">
-                        Подклассы Опции
-                    </a>
-                </li>
             </ul>
         </div>
         <div class="col-md-9">
+
             <!-- Button trigger modal -->
             <div class="text-right">
-                <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#addBrand">
-                    Добавить Брэнд
+                <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#addRegion">
+                    Добавить Регион
                 </button>
             </div>
 
             <table class="table table-hover mt-3">
                 <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>name</th>
-                        <th>created at</th>
-                        <th style="width: 10%">Actions</th>
-                    </tr>
+                <tr>
+                    <th>#</th>
+                    <th>name</th>
+                    <th>created at</th>
+                    <th style="width: 10%">Actions</th>
+                </tr>
                 </thead>
                 <tbody>
-                    @foreach($brands as $brand)
-                        <tr>
-                            <td>{{$brand->id}}</td>
-                            <td>{{$brand->name}}</td>
-                            <td>{{$brand->created_at}}</td>
-                            <td>
-                                <a href="{{route('admin.brandShow', ['id'=>$brand->id])}}" class="btn btn-success mb-1">Обновить</a>
-                                <form action="{{url('/admin/brand/'.$brand->id)}}" method="post">
-                                    {{method_field('delete')}}
-                                    @csrf
-{{--                                    <input type="hidden" name="brand_id" value="{{$brand->id}}">--}}
-                                    <button class="btn btn-danger">Удалить</button>
-                                </form>
-                            </td>
-                        </tr>
-                    @endforeach
+                @foreach($regions as $region)
+                    <tr>
+                        <td>{{$region->id}}</td>
+                        <td>{{$region->name}}</td>
+                        <td>{{$region->created_at}}</td>
+                        <td>
+                            <a href="{{route('admin.regionShow', ['id'=>$region->id])}}" class="btn btn-success mb-1">Обновить</a>
+                            <form action="{{url('/admin/region/'.$region->id)}}" method="post">
+                                {{method_field('delete')}}
+                                @csrf
+                                {{--<input type="hidden" name="brand_id" value="{{$brand->id}}">--}}
+                                <button class="btn btn-danger">Удалить</button>
+                            </form>
+                        </td>
+                    </tr>
+                @endforeach
                 </tbody>
             </table>
         </div>
