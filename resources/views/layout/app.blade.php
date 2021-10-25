@@ -16,7 +16,6 @@
 </div>
 <script src="{{asset('jquery-3.5.1.min.js')}}"></script>
 <script src="{{asset('bootstrap-4.6.0-dist/js/bootstrap.js')}}"></script>
-<script src="{{asset('js/mystyle.js')}}"></script>
 </body>
 <div class="container-fluid">
     @include('layout.footer')

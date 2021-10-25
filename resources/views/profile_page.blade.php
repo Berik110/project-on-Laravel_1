@@ -2,18 +2,22 @@
 @section('content')
     <div class="row">
         <div class="col-6 mx-auto">
-            <?php
-            if(isset($_GET['success'])){
-            ?>
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                Продление прошла успешно!
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <?php
-            }
-            ?>
+
+            <?php if(isset($_GET['success1'])){ ?>
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    Регистрация прошла успешно!
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            <?php } ?>
+
+            @if(\Illuminate\Support\Facades\Session::get('success'))
+                <div class="alert alert-success">
+                    {{ \Illuminate\Support\Facades\Session::get('success') }}
+                </div>
+            @endif
+
         </div>
     </div>
 

@@ -19,7 +19,6 @@
             </a>
         </div>
         @endforeach
-
 {{--        @foreach($items as $item)--}}
 {{--            <div class="card bg-light mr-3 mb-3" style="width: 16rem;">--}}
 {{--                <a href="#" style="text-decoration: none; color: black; font-size: 1rem">--}}

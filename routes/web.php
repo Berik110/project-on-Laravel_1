@@ -116,10 +116,10 @@ Route::put('/details/change', [\App\Http\Controllers\ItemController::class, 'upd
 Route::put('/details/change/img', [\App\Http\Controllers\ItemController::class, 'updateImg']);
 Route::get('/setting', [\App\Http\Controllers\UserController::class, 'settingPage'])->name('setting')->middleware('auth');
 Route::put('/setting/saves', [\App\Http\Controllers\UserController::class, 'settingSavePage'])->name('save_setting');
-Route::get('/profile/archives/proceed', [App\Http\Controllers\ItemController::class, 'deleteExtention'])->name('delExt');
-Route::put('/profile/archives/pro', [App\Http\Controllers\ItemController::class, 'prolonation_102030days'])->name('prolong_10days');
-Route::put('/profile/archives/prolong', [App\Http\Controllers\ItemController::class, 'prolonation_102030days'])->name('prolong_20days');
-Route::put('/profile/archives/prolongat', [App\Http\Controllers\ItemController::class, 'prolonation_102030days'])->name('prolong_30days');
+Route::get('/profile/archives/proceed', [App\Http\Controllers\ItemController::class, 'deleteExtention'])->name('delExt')->middleware('auth');
+Route::put('/profile/archives/pro', [App\Http\Controllers\ItemController::class, 'prolonation_102030days'])->name('prolong_10days')->middleware('auth');
+Route::put('/profile/archives/prolong', [App\Http\Controllers\ItemController::class, 'prolonation_102030days'])->name('prolong_20days')->middleware('auth');
+Route::put('/profile/archives/prolongat', [App\Http\Controllers\ItemController::class, 'prolonation_102030days'])->name('prolong_30days')->middleware('auth');
 
 
 Route::get('/regions/{id}', [\App\Http\Controllers\RegionController::class, 'getCity'])->name('getCity');

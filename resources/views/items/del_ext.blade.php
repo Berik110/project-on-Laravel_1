@@ -30,10 +30,11 @@
                     @csrf
                     {{method_field('put')}}
                     <input type="hidden" name="item_id" value="{{$item->id}}">
+                    <input type="hidden" name="nomer" value="10">
                     <input type="hidden" class="form-control" name="srok" value="{{date('Y-m-d H:i:s', time()+(60*1))}}">
 
                     <button class="btn btn-outline-primary" style="padding: 80px 30px 80px 30px; margin-bottom: 10px">
-                        Продлить на 10 дней - 100тг.
+                        Продлить на 10 дней - 150 ед.
                     </button>
                 </form>
             </div>
@@ -43,10 +44,11 @@
                     @csrf
                     {{method_field('put')}}
                     <input type="hidden" name="item_id" value="{{$item->id}}">
+                    <input type="hidden" name="nomer" value="20">
                     <input type="hidden" class="form-control" name="srok" value="{{date('Y-m-d H:i:s', time()+(60*2))}}">
 
                     <button class="btn btn-outline-primary" style="padding: 80px 30px 80px 30px; margin-bottom: 10px">
-                        Продлить на 20 дней - 150тг.
+                        Продлить на 20 дней - 250 ед.
                     </button>
                 </form>
             </div>
@@ -56,10 +58,11 @@
                     @csrf
                     {{method_field('put')}}
                     <input type="hidden" name="item_id" value="{{$item->id}}">
+                    <input type="hidden" name="nomer" value="30">
                     <input type="hidden" class="form-control" name="srok" value="{{date('Y-m-d H:i:s', time()+(60*3))}}">
 
                     <button class="btn btn-outline-primary" style="padding: 80px 30px 80px 30px; margin-bottom: 10px">
-                        Продлить на 30 дней - 250тг.
+                        Продлить на 30 дней - 400 ед.
                     </button>
                 </form>
             </div>

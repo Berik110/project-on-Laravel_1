@@ -66,7 +66,9 @@ class HomeController extends Controller
         }
         ItemImage::create(['url'=>$path ?? null, 'item_id'=>$item->id]); // $path ? $path : null
 
-        return redirect('/advertpage?succes=1');
+//        return redirect('/advertpage?succes=1'); сперва сделал так
+        /* а потом сделал так */
+        return back()->with('success', 'Ваше объявление опубликовано!');
 
 //        мульти загрузка - работает
 //        $item = Item::create($request->all());

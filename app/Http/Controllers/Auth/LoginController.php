@@ -37,4 +37,10 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+
+    /* для логина по номеру телефона */
+    public function username()
+    {
+        return 'phone_number';
+    }
 }

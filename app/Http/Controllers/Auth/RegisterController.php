@@ -30,7 +30,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/profile?success';
+    protected $redirectTo = '/profile?success1';
 
     /**
      * Create a new controller instance.
@@ -52,9 +52,9 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'email' => ['string', 'email', 'max:255', 'unique:users', 'nullable'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'phone_number' => ['required', 'string', 'max:12']
+            'phone_number' => ['required', 'string', 'max:255', 'unique:users']
         ]);
     }
 
@@ -66,23 +66,23 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        $code = rand(1234, 9998);
-        $mess = 'Ваш пароль: '.$code;
-        $array = array(
-            'login'    => 'louerkz',
-            'psw' => 'bd331759',
-            'phones'=>$data['phone_number'],
-            'mes'=>$mess
-        );
-
-        $ch = curl_init('https://smsc.ru/sys/send.php');
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $array);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($ch, CURLOPT_HEADER, false);
-        $html = curl_exec($ch);
-        curl_close($ch);
+//        $code = rand(1234, 9998);
+//        $mess = 'Ваш пароль: '.$code;
+//        $array = array(
+//            'login'    => 'louerkz',
+//            'psw' => 'bd331759',
+//            'phones'=>$data['phone_number'],
+//            'mes'=>$mess
+//        );
+//
+//        $ch = curl_init('https://smsc.ru/sys/send.php');
+//        curl_setopt($ch, CURLOPT_POST, 1);
+//        curl_setopt($ch, CURLOPT_POSTFIELDS, $array);
+//        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+//        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+//        curl_setopt($ch, CURLOPT_HEADER, false);
+//        $html = curl_exec($ch);
+//        curl_close($ch);
 
         return User::create([
             'name' => $data['name'],

@@ -30,14 +30,14 @@
                         Оборудования и Спец.техники.
                     </span><br/><br/>
                     <span style="font-size: 0.90rem;">
-                    Тел.: +7702 1105742 /
-                    Эл.почта: corp.department1@gmail.com
+                    <i class="fas fa-phone-alt"></i> +7702 1105742 |
+                    <i class="fas fa-envelope"></i> corp.department1@gmail.com
                     </span>
                 </p>
             </div>
             <div class="col-md-6">
                 <p class="text-center text-light mx-auto" style="padding-top: 20px; padding-bottom: 10px; font-size: 0.90rem;">
-                    <br/>
+                    <br/><br/>
                     louer.kz ©
 {{--                    <i class="far fa-copyright"></i>--}}
                     2021 Все права защищены.

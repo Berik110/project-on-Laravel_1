@@ -1,22 +1,28 @@
 @extends('layout.app')
 @section('content')
-
+    @auth
     <div class="row mt-4 justify-content-center">
         <div class="col-md-6 mx-auto">
 
-            <?php
-            if(isset($_GET['succes']) && $_GET['succes']=='1'){
-            ?>
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                Ваше объявление добавлено!
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <?php
-            }
-            ?>
+{{--            <?php--}}
+{{--            if(isset($_GET['succes']) && $_GET['succes']=='1'){--}}
+{{--            ?>--}}
+{{--            <div class="alert alert-success alert-dismissible fade show" role="alert">--}}
+{{--                Ваше объявление добавлено!--}}
+{{--                <button type="button" class="close" data-dismiss="alert" aria-label="Close">--}}
+{{--                    <span aria-hidden="true">&times;</span>--}}
+{{--                </button>--}}
+{{--            </div>--}}
+{{--            <?php--}}
+{{--            }--}}
+{{--            ?>--}}
 
+            @if(\Illuminate\Support\Facades\Session::get('success'))
+                <div class="alert alert-success">
+                    {{ \Illuminate\Support\Facades\Session::get('success') }}
+                </div>
+            @endif
+            <div class="p-4 shadow">
             <form action="{{route('toAddAdv')}}" method="post" enctype="multipart/form-data">
                 @csrf
                 <input type="hidden" name="user_id" value="{{$user->id}}">
@@ -142,8 +148,10 @@
                     <button class="btn btn-success">Добавить объявление</button>
                 </div>
             </form>
+            </div>
         </div>
     </div>
+    @endauth
 @endsection
 
 @section('custom.js')

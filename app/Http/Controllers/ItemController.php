@@ -363,8 +363,8 @@ class ItemController extends Controller
 //        $item->srok = $request->get("srok");
         $item->save();
         $id = $request->id;
-
-        return redirect('/details/change?id='.$id);
+//        return redirect('/details/change?id='.$id);
+        return redirect('/details/change?id='.$id)->with('success', 'изменения сохранены!');
     }
 
 //    public function updateItem(Request $request){
@@ -428,7 +428,7 @@ class ItemController extends Controller
         $item = Item::find($request->get('item_id'));
         $item->srok = $request->get('srok');
         $item->save();
-
+        $day = $request->get('nomer');
         $user = Auth::user();
         $categories = Category::all();
         $brands = Brand::all();
@@ -438,7 +438,11 @@ class ItemController extends Controller
         $itemsArchives = Item::where('user_id', $user->id)
             ->where('srok', '<', date('Y-m-d H:i:s'))
             ->get();
-        return view('profile_page', compact('user', 'categories', 'brands', 'items', 'itemsArchives'))->with('success');
+
+        /* ниже все варианты работают */
+//        return view('profile_page', compact('user', 'categories', 'brands', 'items', 'itemsArchives'))->with('success', 'Ваше объявление успешно продлен');
+//        return redirect('/profile')->with('success', 'Ваше объявление продлен на '.$day.' дней!', ['user'=>'user', 'categories'=>'categories', 'brands'=>'brands', 'items'=>'items', 'itemsArchives'=>'itemsArchives']);
+        return redirect()->route('profile')->with('success', 'Ваше объявление продлен на '.$day.' дней!', ['user'=>'user', 'categories'=>'categories', 'brands'=>'brands', 'items'=>'items', 'itemsArchives'=>'itemsArchives']);
     }
 
 }
