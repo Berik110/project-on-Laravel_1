@@ -11,6 +11,7 @@ use App\Models\ItemImage;
 use App\Models\Option;
 use App\Models\Region;
 use App\Models\Rent;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -35,7 +36,7 @@ class HomeController extends Controller
     {
         $categories = Category::all();
         $items = Item::all();
-        return view('home', compact('categories', 'items'));
+        return view('home1', compact('categories', 'items'));
     }
 
     public function addAdvPage()
@@ -51,7 +52,21 @@ class HomeController extends Controller
 
     public function storeAdd(AddItemRequest $req, ValidateImgStore $request)
     {
-        $item = Item::create($req->all());
+//        $item = Item::create($req->all());
+        $item = new Item();
+        $item->name = $request->get("name");
+        $item->year = $request->get("year");
+        $item->description = $request->get("description");
+        $item->price = $request->get("price");
+        $item->option_id = $request->get("option_id");
+        $item->rent_id = $request->get("rent_id");
+        $item->brand_id = $request->get("brand_id");
+        $item->category_id = $request->get("category_id");
+        $item->city_id = $request->get("city_id");
+        $item->user_id = $request->get("user_id");
+        $item->srok = date("Y-m-d H:i:s", time()+ 60*60*24*14);
+        $item->save();
+
         /* 1 вариант  - было так согласно курсу */
 //        $file = $request->file('url'); Достаем файл с request
 //        $path = '/images/'.$file->getClientOriginalName(); это путь
@@ -68,7 +83,8 @@ class HomeController extends Controller
 
 //        return redirect('/advertpage?succes=1'); сперва сделал так
         /* а потом сделал так */
-        return back()->with('success', 'Ваше объявление опубликовано!');
+//        return back()->with('success', 'Ваше объявление опубликовано!');
+        return redirect()->route('profile')->with('success', 'Ваше объявление опубликовано!');
 
 //        мульти загрузка - работает
 //        $item = Item::create($request->all());

@@ -34,7 +34,7 @@ class CreateItemsTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
 //            $table->bigInteger('srok');
-            $table->timestamp('srok');
+            $table->dateTime('srok');
             $table->timestamps();
             $table->softDeletes();
         });

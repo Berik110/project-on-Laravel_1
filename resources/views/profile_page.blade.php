@@ -29,10 +29,13 @@
             </div>
 
             @if(count($items)>0)
-                <p class="font-weight-bold mt-3">Ваши объявления:</p>
+                <p class="font-weight-bold mt-3" style="font-family: Open Sans,sans-serif;">Ваши объявления:</p>
                 @foreach($items as $item)
                     @if($item->user_id==$user->id)
                         <p class="text-muted" style="font-size: 0.85rem">Объявление действует до {{$item->srok}}</p>
+<!--                        --><?php //$s = strtotime($item->srok)-time();
+//                            echo gettype($s);
+//                            echo $s;?>
                         <div class="card bg-light" style="width: 10rem;">
                             <div class="img-container">
                                 @if($item->images->first()['url']!=null)
@@ -73,7 +76,7 @@
 {{--                    @endif--}}
 {{--                @endforeach--}}
             @else
-                <h4 class="mt-5">У вас пока нет объявлений на сайте</h4>
+                <h4 class="mt-5" style="font-family: Open Sans,sans-serif;">У вас пока нет объявлений на сайте</h4>
                 <p>Это легко исправить, <a href="{{route('adv')}}" style="font-weight: bold">подав их.</a></p>
             @endif
         </div>

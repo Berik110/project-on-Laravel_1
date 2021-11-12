@@ -99,7 +99,7 @@
                     </div>
                 </div>
             @else
-                <h4 class="mt-5">Нет объявления в архиве.</h4>
+                <h4 class="mt-5" style="font-family: Open Sans,sans-serif;">Нет объявления в архиве.</h4>
             @endif
         </div>
     </div>

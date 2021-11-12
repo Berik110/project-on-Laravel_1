@@ -9,3 +9,4 @@
 <script src="https://kit.fontawesome.com/a92e924baa.js" crossorigin="anonymous"></script>
 
 <link rel="icon" href="{{ asset('css/favicon_L1.ico') }}">
+<script src="//code-ya.jivosite.com/widget/AcbkO2m5IY" async></script>

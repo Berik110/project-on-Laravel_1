@@ -99,7 +99,7 @@ Route::group([
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/advertpage', [App\Http\Controllers\HomeController::class, 'addAdvPage'])->name('adv');
-Route::post('/', [App\Http\Controllers\HomeController::class, 'storeAdd'])->name('toAddAdv');
+Route::post('/', [App\Http\Controllers\HomeController::class, 'storeAdd'])->name('toAddAdv')->middleware('auth');
 Route::get('/categories', [App\Http\Controllers\ItemController::class, 'itemsByCategory'])->name('categories');
 Route::get('/details', [App\Http\Controllers\ItemController::class, 'getDetails'])->name('details');
 Route::get('/rental', [App\Http\Controllers\ItemController::class, 'option1'])->name('rental');
@@ -117,9 +117,10 @@ Route::put('/details/change/img', [\App\Http\Controllers\ItemController::class, 
 Route::get('/setting', [\App\Http\Controllers\UserController::class, 'settingPage'])->name('setting')->middleware('auth');
 Route::put('/setting/saves', [\App\Http\Controllers\UserController::class, 'settingSavePage'])->name('save_setting');
 Route::get('/profile/archives/proceed', [App\Http\Controllers\ItemController::class, 'deleteExtention'])->name('delExt')->middleware('auth');
-Route::put('/profile/archives/pro', [App\Http\Controllers\ItemController::class, 'prolonation_102030days'])->name('prolong_10days')->middleware('auth');
+Route::get('/profile/archives/pro', [App\Http\Controllers\ItemController::class, 'prolonation_102030days'])->name('prolong_10days')->middleware('auth');
 Route::put('/profile/archives/prolong', [App\Http\Controllers\ItemController::class, 'prolonation_102030days'])->name('prolong_20days')->middleware('auth');
 Route::put('/profile/archives/prolongat', [App\Http\Controllers\ItemController::class, 'prolonation_102030days'])->name('prolong_30days')->middleware('auth');
+Route::post('/profile/change_password', [\App\Http\Controllers\UserController::class, 'changePassword'])->name('change_password')->middleware('auth');
 
 
 Route::get('/regions/{id}', [\App\Http\Controllers\RegionController::class, 'getCity'])->name('getCity');

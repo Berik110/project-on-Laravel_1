@@ -57,8 +57,8 @@
                         <p style="font-size: 0.87rem" class="card-text"><span class="text-muted">Телефон.................</span> {{$item->itemByUser->phone_number}}</p>
                         <p style="font-size: 0.87rem" class="card-text"><span class="text-muted">Эл.почта.................</span> {{$item->itemByUser->email}}</p>
                         <p class="card-text"><small class="text-muted">Дата публикации: {{$item->created_at}}</small></p>
-                        <hr/>
-                        <p class="card-text"><small>Объявление посмотрели <b>7799</b> раз с 12 октября</small></p>
+{{--                        <hr/>--}}
+{{--                        <p class="card-text"><small>Объявление посмотрели <b>7799</b> раз с 12 октября</small></p>--}}
                     @auth
                             @if(\Illuminate\Support\Facades\Auth::user()->id==$item->user_id)
                                 <a href="{{route('change', ['id'=>$item->id, 'city_id'=>$item->city->id])}}" class="btn btn-primary">Редактировать</a>

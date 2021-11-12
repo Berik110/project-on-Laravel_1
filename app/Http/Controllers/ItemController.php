@@ -244,7 +244,6 @@ class ItemController extends Controller
 
         $category = $request->get('category_id');
         $brand = $request->get('brand_id');
-//        $name = $request->get('name');
         $option_id = $request->get('option_id');
         $price_from = $request->get('priceFrom');
         $price_till = $request->get('priceTill');
@@ -426,9 +425,30 @@ class ItemController extends Controller
 
     public function prolonation_102030days(Request $request){
         $item = Item::find($request->get('item_id'));
-        $item->srok = $request->get('srok');
+        $selectedSrok = $request->input("srok");
+
+        // 1 вариант
+        switch ($selectedSrok) {
+            case 10:
+                $new_srok = date("Y-m-d H:i:s", time()+60*60*24*10);
+                break;
+            case 20:
+                $new_srok = date("Y-m-d H:i:s", time()+60*60*24*20);
+                break;
+            case 30:
+                $new_srok = date("Y-m-d H:i:s", time()+60*60*24*30);
+                break;
+            default:
+                echo "неправильный выбор";
+        }
+
+        // 2 вариант
+//        $new_srok = date("Y-m-d H:i:s", time()+60*$selectedSrok);
+
+//        $new_srok = date("Y-m-d H:i:s", time()+60*60*24*$selectedSrok);
+        $item->srok = $new_srok;
         $item->save();
-        $day = $request->get('nomer');
+
         $user = Auth::user();
         $categories = Category::all();
         $brands = Brand::all();
@@ -442,7 +462,7 @@ class ItemController extends Controller
         /* ниже все варианты работают */
 //        return view('profile_page', compact('user', 'categories', 'brands', 'items', 'itemsArchives'))->with('success', 'Ваше объявление успешно продлен');
 //        return redirect('/profile')->with('success', 'Ваше объявление продлен на '.$day.' дней!', ['user'=>'user', 'categories'=>'categories', 'brands'=>'brands', 'items'=>'items', 'itemsArchives'=>'itemsArchives']);
-        return redirect()->route('profile')->with('success', 'Ваше объявление продлен на '.$day.' дней!', ['user'=>'user', 'categories'=>'categories', 'brands'=>'brands', 'items'=>'items', 'itemsArchives'=>'itemsArchives']);
+        return redirect()->route('profile')->with('success', 'Ваше объявление продлен на '.$selectedSrok.' дней!', ['user'=>'user', 'categories'=>'categories', 'brands'=>'brands', 'items'=>'items', 'itemsArchives'=>'itemsArchives']);
     }
 
 }
